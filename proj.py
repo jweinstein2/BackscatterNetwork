@@ -7,14 +7,15 @@ import os.path
 def flipbit(x):
 	return abs(x - 1)
 
-f = scipy.fromfile(open('output/a_backscatter'), dtype=scipy.float32)
-# g = scipy.fromfile(open('/output/notadd.txt'), dtype=scipy.float32)
-bits = scipy.fromfile(open('output/a_srcdata'), dtype=scipy.float32)
+f = scipy.fromfile(open('output/ab_backscatter'), dtype=scipy.float32)
+# f = scipy.fromfile(open('output/a_backscatter'), dtype=scipy.float32)
+a_data = scipy.fromfile(open('output/a_srcdata'), dtype=scipy.float32)
+b_data = scipy.fromfile(open('output/b_srcdata'), dtype=scipy.float32)
 
 # Write input bits in readable format to a file
-bitter = open('output/bits_readable.txt', 'w')
-for line in bits:
-	bitter.write(str(line)+'\n')
+# bitter = open('output/a_bits_readable.txt', 'w')
+# for line in a_data:
+# 	bitter.write(str(line)+'\n')
 
 samples_per_bit = 8000
 max_decoded_bits = 100
@@ -63,7 +64,7 @@ for i in range(1 ,len(f) + 1):
 
 BER = 0
 for i in range(0, len(bitlist)):
-	if bitlist[i] == bits[i]:
+	if bitlist[i] == a_data[i]:
 		BER = BER + 1
 BER = (BER * 100.0) / len(bitlist)
 

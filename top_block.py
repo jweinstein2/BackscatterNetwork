@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Thu Apr 20 22:06:09 2017
+# Generated: Thu Apr 20 22:39:51 2017
 ##################################################
 
 if __name__ == '__main__':
@@ -48,6 +48,48 @@ class top_block(grc_wxgui.top_block_gui):
         self.n.AddPage(grc_wxgui.Panel(self.n), "a")
         self.n.AddPage(grc_wxgui.Panel(self.n), "ab")
         self.Add(self.n)
+        self.wxgui_scopesink2_4 = scopesink2.scope_sink_f(
+        	self.n.GetPage(2).GetWin(),
+        	title='A+B backscatter signal',
+        	sample_rate=samp_rate,
+        	v_scale=0,
+        	v_offset=0,
+        	t_scale=0,
+        	ac_couple=False,
+        	xy_mode=False,
+        	num_inputs=1,
+        	trig_mode=wxgui.TRIG_MODE_AUTO,
+        	y_axis_label='Counts',
+        )
+        self.n.GetPage(2).Add(self.wxgui_scopesink2_4.win)
+        self.wxgui_scopesink2_3 = scopesink2.scope_sink_f(
+        	self.n.GetPage(2).GetWin(),
+        	title='B source data',
+        	sample_rate=samp_rate,
+        	v_scale=0,
+        	v_offset=0,
+        	t_scale=0,
+        	ac_couple=False,
+        	xy_mode=False,
+        	num_inputs=1,
+        	trig_mode=wxgui.TRIG_MODE_AUTO,
+        	y_axis_label='Counts',
+        )
+        self.n.GetPage(2).Add(self.wxgui_scopesink2_3.win)
+        self.wxgui_scopesink2_2 = scopesink2.scope_sink_f(
+        	self.n.GetPage(1).GetWin(),
+        	title='A source data',
+        	sample_rate=samp_rate,
+        	v_scale=0,
+        	v_offset=0,
+        	t_scale=0,
+        	ac_couple=False,
+        	xy_mode=False,
+        	num_inputs=1,
+        	trig_mode=wxgui.TRIG_MODE_AUTO,
+        	y_axis_label='Counts',
+        )
+        self.n.GetPage(1).Add(self.wxgui_scopesink2_2.win)
         self.wxgui_scopesink2_1 = scopesink2.scope_sink_f(
         	self.n.GetPage(0).GetWin(),
         	title='Carrier Wave',
@@ -62,15 +104,32 @@ class top_block(grc_wxgui.top_block_gui):
         	y_axis_label='Counts',
         )
         self.n.GetPage(0).Add(self.wxgui_scopesink2_1.win)
+        self.wxgui_scopesink2_0 = scopesink2.scope_sink_f(
+        	self.n.GetPage(1).GetWin(),
+        	title='A Backscatter Signal',
+        	sample_rate=samp_rate,
+        	v_scale=0,
+        	v_offset=0,
+        	t_scale=0,
+        	ac_couple=False,
+        	xy_mode=False,
+        	num_inputs=1,
+        	trig_mode=wxgui.TRIG_MODE_AUTO,
+        	y_axis_label='Counts',
+        )
+        self.n.GetPage(1).Add(self.wxgui_scopesink2_0.win)
+        self.blocks_throttle_0 = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
         self.blocks_repeat_3 = blocks.repeat(gr.sizeof_int*1, 3)
-        self.blocks_repeat_2 = blocks.repeat(gr.sizeof_int*1, 3)
+        self.blocks_repeat_2 = blocks.repeat(gr.sizeof_int*1, 2)
         self.blocks_repeat_1 = blocks.repeat(gr.sizeof_float*1, 8000)
         self.blocks_repeat_0 = blocks.repeat(gr.sizeof_float*1, 8000)
         self.blocks_multiply_xx_1 = blocks.multiply_vff(1)
         self.blocks_multiply_xx_0 = blocks.multiply_vff(1)
-        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vff((0, ))
+        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vff((1, ))
         self.blocks_int_to_float_1 = blocks.int_to_float(1, 1)
         self.blocks_int_to_float_0 = blocks.int_to_float(1, 1)
+        self.blocks_file_sink_4 = blocks.file_sink(gr.sizeof_float*1, '/Users/jaredweinstein/Desktop/CS434Project/output/b_srcdata', False)
+        self.blocks_file_sink_4.set_unbuffered(False)
         self.blocks_file_sink_3 = blocks.file_sink(gr.sizeof_float*1, '/Users/jaredweinstein/Desktop/CS434Project/output/ab_backscatter', False)
         self.blocks_file_sink_3.set_unbuffered(False)
         self.blocks_file_sink_2 = blocks.file_sink(gr.sizeof_float*1, '/Users/jaredweinstein/Desktop/CS434Project/output/a_srcdata', False)
@@ -97,10 +156,15 @@ class top_block(grc_wxgui.top_block_gui):
         self.connect((self.analog_sig_source_x_0, 0), (self.wxgui_scopesink2_1, 0))
         self.connect((self.blocks_add_xx_0, 0), (self.blocks_add_xx_1, 0))
         self.connect((self.blocks_add_xx_0, 0), (self.blocks_file_sink_0, 0))
+        self.connect((self.blocks_add_xx_0, 0), (self.blocks_throttle_0, 0))
         self.connect((self.blocks_add_xx_1, 0), (self.blocks_file_sink_3, 0))
+        self.connect((self.blocks_add_xx_1, 0), (self.wxgui_scopesink2_4, 0))
         self.connect((self.blocks_int_to_float_0, 0), (self.blocks_file_sink_2, 0))
         self.connect((self.blocks_int_to_float_0, 0), (self.blocks_repeat_0, 0))
+        self.connect((self.blocks_int_to_float_0, 0), (self.wxgui_scopesink2_2, 0))
+        self.connect((self.blocks_int_to_float_1, 0), (self.blocks_file_sink_4, 0))
         self.connect((self.blocks_int_to_float_1, 0), (self.blocks_repeat_1, 0))
+        self.connect((self.blocks_int_to_float_1, 0), (self.wxgui_scopesink2_3, 0))
         self.connect((self.blocks_multiply_const_vxx_0, 0), (self.blocks_add_xx_1, 1))
         self.connect((self.blocks_multiply_xx_0, 0), (self.blocks_add_xx_0, 0))
         self.connect((self.blocks_multiply_xx_1, 0), (self.blocks_multiply_const_vxx_0, 0))
@@ -108,13 +172,19 @@ class top_block(grc_wxgui.top_block_gui):
         self.connect((self.blocks_repeat_1, 0), (self.blocks_multiply_xx_1, 1))
         self.connect((self.blocks_repeat_2, 0), (self.blocks_int_to_float_1, 0))
         self.connect((self.blocks_repeat_3, 0), (self.blocks_int_to_float_0, 0))
+        self.connect((self.blocks_throttle_0, 0), (self.wxgui_scopesink2_0, 0))
 
     def get_samp_rate(self):
         return self.samp_rate
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
+        self.wxgui_scopesink2_4.set_sample_rate(self.samp_rate)
+        self.wxgui_scopesink2_3.set_sample_rate(self.samp_rate)
+        self.wxgui_scopesink2_2.set_sample_rate(self.samp_rate)
         self.wxgui_scopesink2_1.set_sample_rate(self.samp_rate)
+        self.wxgui_scopesink2_0.set_sample_rate(self.samp_rate)
+        self.blocks_throttle_0.set_sample_rate(self.samp_rate)
         self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
 
 

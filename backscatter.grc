@@ -392,61 +392,6 @@
     </param>
   </block>
   <block>
-    <key>blocks_copy</key>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>enabled</key>
-      <value>False</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(784, 508)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>blocks_copy_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>showports</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>float</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>1</value>
-    </param>
-  </block>
-  <block>
     <key>blocks_file_sink</key>
     <param>
       <key>append</key>
@@ -627,7 +572,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1040, 352)</value>
+      <value>(1080, 328)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -670,7 +615,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>1</value>
     </param>
     <param>
       <key>file</key>
@@ -807,7 +752,7 @@
     </param>
     <param>
       <key>const</key>
-      <value>0</value>
+      <value>1</value>
     </param>
     <param>
       <key>affinity</key>
@@ -1082,7 +1027,7 @@
     </param>
     <param>
       <key>interp</key>
-      <value>3</value>
+      <value>2</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -1168,7 +1113,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -1270,7 +1215,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -1306,7 +1251,7 @@
     </param>
     <param>
       <key>title</key>
-      <value>Backscatter Signal</value>
+      <value>A Backscatter Signal</value>
     </param>
     <param>
       <key>trig_mode</key>
@@ -1444,7 +1389,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -1480,7 +1425,7 @@
     </param>
     <param>
       <key>title</key>
-      <value>Scope Plot</value>
+      <value>A source data</value>
     </param>
     <param>
       <key>trig_mode</key>
@@ -1531,7 +1476,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -1567,7 +1512,94 @@
     </param>
     <param>
       <key>title</key>
-      <value>Scope Plot</value>
+      <value>B source data</value>
+    </param>
+    <param>
+      <key>trig_mode</key>
+      <value>wxgui.TRIG_MODE_AUTO</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>v_offset</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>v_scale</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>win_size</key>
+      <value></value>
+    </param>
+    <param>
+      <key>xy_mode</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>y_axis_label</key>
+      <value>Counts</value>
+    </param>
+  </block>
+  <block>
+    <key>wxgui_scopesink2</key>
+    <param>
+      <key>ac_couple</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1080, 400)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>grid_pos</key>
+      <value></value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>wxgui_scopesink2_4</value>
+    </param>
+    <param>
+      <key>notebook</key>
+      <value>n, 2</value>
+    </param>
+    <param>
+      <key>num_inputs</key>
+      <value>1</value>
+    </param>
+    <param>
+      <key>samp_rate</key>
+      <value>samp_rate</value>
+    </param>
+    <param>
+      <key>t_scale</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>title</key>
+      <value>A+B backscatter signal</value>
     </param>
     <param>
       <key>trig_mode</key>
@@ -1665,10 +1697,10 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>blocks_copy_0</source_block_id>
-    <sink_block_id>blocks_add_xx_1</sink_block_id>
+    <source_block_id>blocks_add_xx_1</source_block_id>
+    <sink_block_id>wxgui_scopesink2_4</sink_block_id>
     <source_key>0</source_key>
-    <sink_key>1</sink_key>
+    <sink_key>0</sink_key>
   </connection>
   <connection>
     <source_block_id>blocks_int_to_float_0</source_block_id>
@@ -1711,12 +1743,6 @@
     <sink_block_id>blocks_add_xx_1</sink_block_id>
     <source_key>0</source_key>
     <sink_key>1</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_multiply_const_vxx_0</source_block_id>
-    <sink_block_id>blocks_copy_0</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
   </connection>
   <connection>
     <source_block_id>blocks_multiply_xx_0</source_block_id>
