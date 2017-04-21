@@ -3,61 +3,71 @@ from math import cos, sin, sqrt, pi
 import sys
 import os.path
 
-f = scipy.fromfile(open('added.txt'), dtype=scipy.float32)
-g = scipy.fromfile(open('notadd.txt'), dtype=scipy.float32)
-bits = scipy.fromfile(open('bitfile'), dtype=scipy.float32)
+# - Helper Functions
+def flipbit(x):
+	return abs(x - 1)
 
-bitter = open('/Users/Andre/Desktop/bits.txt', 'w')
+f = scipy.fromfile(open('output/a_backscatter'), dtype=scipy.float32)
+# g = scipy.fromfile(open('/output/notadd.txt'), dtype=scipy.float32)
+bits = scipy.fromfile(open('output/a_srcdata'), dtype=scipy.float32)
+
+# Write input bits in readable format to a file
+bitter = open('output/bits_readable.txt', 'w')
 for line in bits:
 	bitter.write(str(line)+'\n')
 
-# print(len(f))
-tot=0
+samples_per_bit = 8000
+max_decoded_bits = 100
+first_bit = 1
 avglist=[]
 bitlist=[]
 
-bit = 1
-prevAvg=0
-for i in range(0,len(f)):
-	# print(f[i])
-	# print(g[i])
+tot = 0
+for i in range(1 ,len(f) + 1):
+	# Check if we've hit our max bits decoded
+	if (i > max_decoded_bits * samples_per_bit):
+		print('manually stopping b/c hit max')
+		break
 
-	tot+=abs(f[i])
-	
-	if i%7999==0 and i!=0:
-		avg=tot/8000
-		
-		if i==7999:
-			prevAvg = avg
+	power = abs( f[i - 1] )
+	tot += power
 
+	# If we are at the cutoff between two windows
+	if i % (samples_per_bit) == 0:
+		avg = tot / samples_per_bit
+		prevAvg = avg if len(avglist) == 0 else avglist[-1]
+
+		prevbit = first_bit if len(bitlist) == 0 else bitlist[-1]
 		if abs(avg - prevAvg) > 0.4:
-			bitFlip = True
+			bitlist.append( flipbit( prevbit ))
 		else:
-			bitFlip = False
+			bitlist.append( prevbit )
 
-		if bitFlip:
-			if bit == 1:
-				bit = 0
-			else:
-				bit = 1
-
-		bitlist.append(bit)
-
-		prevAvg=avg
 		tot=0
 		avglist.append(avg)
-	if i == 799900:
-		break
+
+# print('======== AVG LIST ========')
 # for item in avglist:
 # 	print(item)
-for item in bitlist:
-	print(item)
+# print('==========================')
 
+# print('======== BIT LIST ========')
+# for item in bitlist:
+# 	print(item)
+# print('==========================')
 
+# print('======== ORIGINAL BIT LIST ========')
+# for bit in bits:
+# 	print(int(bit))
+# print('===================================')
 
-	#print('\n')
-	# if i%==0:
-	# 	print(tot/100)
-	# 	tot=0
+BER = 0
+for i in range(0, len(bitlist)):
+	if bitlist[i] == bits[i]:
+		BER = BER + 1
+BER = (BER * 100.0) / len(bitlist)
 
-	# 	
+print('=========== SUMMARY ===========')
+print('      BER - ' + str(BER) + '%')
+print('   length - ' + str( len(bitlist) ) + ' bits')
+print('===============================')

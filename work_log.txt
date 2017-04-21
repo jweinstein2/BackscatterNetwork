@@ -1,0 +1,4 @@
+APRIL 20TH - Implemented the basics of an encoder and decoder for 1 
+backscatter device. This does not include any fading or multipath.
+We are sending at 100bps. Decoding without any error. Used .4 as a threshold
+value based on experimentation.
