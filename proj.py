@@ -7,7 +7,7 @@ import os.path
 def flipbit(x):
 	return abs(x - 1)
 
-f = scipy.fromfile(open('output/ab_backscatter'), dtype=scipy.float32)
+f = scipy.fromfile(open('output/a_backscatter'), dtype=scipy.float32)
 # f = scipy.fromfile(open('output/a_backscatter'), dtype=scipy.float32)
 a_data = scipy.fromfile(open('output/a_srcdata'), dtype=scipy.float32)
 b_data = scipy.fromfile(open('output/b_srcdata'), dtype=scipy.float32)
@@ -19,7 +19,7 @@ b_data = scipy.fromfile(open('output/b_srcdata'), dtype=scipy.float32)
 
 samples_per_bit = 8000
 max_decoded_bits = 100
-first_bit = 1
+first_bit = 0
 avglist=[]
 bitlist=[]
 
@@ -39,7 +39,7 @@ for i in range(1 ,len(f) + 1):
 		prevAvg = avg if len(avglist) == 0 else avglist[-1]
 
 		prevbit = first_bit if len(bitlist) == 0 else bitlist[-1]
-		if abs(avg - prevAvg) > 0.4:
+		if abs(avg - prevAvg) > 250:
 			bitlist.append( flipbit( prevbit ))
 		else:
 			bitlist.append( prevbit )
@@ -47,10 +47,12 @@ for i in range(1 ,len(f) + 1):
 		tot=0
 		avglist.append(avg)
 
-# print('======== AVG LIST ========')
-# for item in avglist:
-# 	print(item)
-# print('==========================')
+print('======== DECODED DATA ========')
+print('   avg    |    dbit   |   obit    ')
+print('----------+-----------+-----------')
+for i in range(0, len(avglist)):
+	print(str(avglist[i])[:9] + " |     " + str(bitlist[i]) + "     |   " + str(int(a_data[i])))
+print('==========================')
 
 # print('======== BIT LIST ========')
 # for item in bitlist:
@@ -58,7 +60,7 @@ for i in range(1 ,len(f) + 1):
 # print('==========================')
 
 # print('======== ORIGINAL BIT LIST ========')
-# for bit in bits:
+# for bit in a_data:
 # 	print(int(bit))
 # print('===================================')
 

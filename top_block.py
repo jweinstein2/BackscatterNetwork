@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Thu Apr 20 22:39:51 2017
+# Generated: Mon Apr 24 16:24:50 2017
 ##################################################
 
 if __name__ == '__main__':
@@ -18,6 +18,7 @@ if __name__ == '__main__':
 
 from gnuradio import analog
 from gnuradio import blocks
+from gnuradio import channels
 from gnuradio import eng_notation
 from gnuradio import gr
 from gnuradio import wxgui
@@ -39,6 +40,7 @@ class top_block(grc_wxgui.top_block_gui):
         # Variables
         ##################################################
         self.samp_rate = samp_rate = 800000
+        self.directory = directory = 0
 
         ##################################################
         # Blocks
@@ -118,6 +120,8 @@ class top_block(grc_wxgui.top_block_gui):
         	y_axis_label='Counts',
         )
         self.n.GetPage(1).Add(self.wxgui_scopesink2_0.win)
+        self.channels_fading_model_1 = channels.fading_model( 8, 10.0/samp_rate, True, 4, 0 )
+        self.channels_fading_model_0 = channels.fading_model( 8, 10.0/samp_rate, True, 4, 0 )
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
         self.blocks_repeat_3 = blocks.repeat(gr.sizeof_int*1, 3)
         self.blocks_repeat_2 = blocks.repeat(gr.sizeof_int*1, 2)
@@ -125,9 +129,12 @@ class top_block(grc_wxgui.top_block_gui):
         self.blocks_repeat_0 = blocks.repeat(gr.sizeof_float*1, 8000)
         self.blocks_multiply_xx_1 = blocks.multiply_vff(1)
         self.blocks_multiply_xx_0 = blocks.multiply_vff(1)
+        self.blocks_multiply_const_vxx_1 = blocks.multiply_const_vff((1, ))
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vff((1, ))
         self.blocks_int_to_float_1 = blocks.int_to_float(1, 1)
         self.blocks_int_to_float_0 = blocks.int_to_float(1, 1)
+        self.blocks_float_to_complex_1 = blocks.float_to_complex(1)
+        self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
         self.blocks_file_sink_4 = blocks.file_sink(gr.sizeof_float*1, '/Users/jaredweinstein/Desktop/CS434Project/output/b_srcdata', False)
         self.blocks_file_sink_4.set_unbuffered(False)
         self.blocks_file_sink_3 = blocks.file_sink(gr.sizeof_float*1, '/Users/jaredweinstein/Desktop/CS434Project/output/ab_backscatter', False)
@@ -138,15 +145,21 @@ class top_block(grc_wxgui.top_block_gui):
         self.blocks_file_sink_1.set_unbuffered(False)
         self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_float*1, '/Users/jaredweinstein/Desktop/CS434Project/output/a_backscatter', False)
         self.blocks_file_sink_0.set_unbuffered(False)
+        self.blocks_complex_to_float_1 = blocks.complex_to_float(1)
+        self.blocks_complex_to_float_0 = blocks.complex_to_float(1)
         self.blocks_add_xx_1 = blocks.add_vff(1)
         self.blocks_add_xx_0 = blocks.add_vff(1)
-        self.analog_sig_source_x_0 = analog.sig_source_f(samp_rate, analog.GR_COS_WAVE, 300000, 1, 0)
+        self.analog_sig_source_x_0 = analog.sig_source_f(samp_rate, analog.GR_COS_WAVE, 300000, 500, 0)
         self.analog_random_source_x_1 = blocks.vector_source_i(map(int, numpy.random.randint(0, 2, 1000)), True)
         self.analog_random_source_x_0 = blocks.vector_source_i(map(int, numpy.random.randint(0, 2, 1000)), True)
+        self.analog_const_source_x_1 = analog.sig_source_f(0, analog.GR_CONST_WAVE, 0, 0, 0)
+        self.analog_const_source_x_0 = analog.sig_source_f(0, analog.GR_CONST_WAVE, 0, 0, 0)
 
         ##################################################
         # Connections
         ##################################################
+        self.connect((self.analog_const_source_x_0, 0), (self.blocks_float_to_complex_0, 1))
+        self.connect((self.analog_const_source_x_1, 0), (self.blocks_float_to_complex_1, 1))
         self.connect((self.analog_random_source_x_0, 0), (self.blocks_repeat_3, 0))
         self.connect((self.analog_random_source_x_1, 0), (self.blocks_repeat_2, 0))
         self.connect((self.analog_sig_source_x_0, 0), (self.blocks_add_xx_0, 1))
@@ -159,20 +172,27 @@ class top_block(grc_wxgui.top_block_gui):
         self.connect((self.blocks_add_xx_0, 0), (self.blocks_throttle_0, 0))
         self.connect((self.blocks_add_xx_1, 0), (self.blocks_file_sink_3, 0))
         self.connect((self.blocks_add_xx_1, 0), (self.wxgui_scopesink2_4, 0))
+        self.connect((self.blocks_complex_to_float_0, 0), (self.blocks_add_xx_0, 0))
+        self.connect((self.blocks_complex_to_float_1, 0), (self.blocks_add_xx_1, 1))
+        self.connect((self.blocks_float_to_complex_0, 0), (self.channels_fading_model_0, 0))
+        self.connect((self.blocks_float_to_complex_1, 0), (self.channels_fading_model_1, 0))
         self.connect((self.blocks_int_to_float_0, 0), (self.blocks_file_sink_2, 0))
         self.connect((self.blocks_int_to_float_0, 0), (self.blocks_repeat_0, 0))
         self.connect((self.blocks_int_to_float_0, 0), (self.wxgui_scopesink2_2, 0))
         self.connect((self.blocks_int_to_float_1, 0), (self.blocks_file_sink_4, 0))
         self.connect((self.blocks_int_to_float_1, 0), (self.blocks_repeat_1, 0))
         self.connect((self.blocks_int_to_float_1, 0), (self.wxgui_scopesink2_3, 0))
-        self.connect((self.blocks_multiply_const_vxx_0, 0), (self.blocks_add_xx_1, 1))
-        self.connect((self.blocks_multiply_xx_0, 0), (self.blocks_add_xx_0, 0))
+        self.connect((self.blocks_multiply_const_vxx_0, 0), (self.blocks_float_to_complex_1, 0))
+        self.connect((self.blocks_multiply_const_vxx_1, 0), (self.blocks_float_to_complex_0, 0))
+        self.connect((self.blocks_multiply_xx_0, 0), (self.blocks_multiply_const_vxx_1, 0))
         self.connect((self.blocks_multiply_xx_1, 0), (self.blocks_multiply_const_vxx_0, 0))
         self.connect((self.blocks_repeat_0, 0), (self.blocks_multiply_xx_0, 0))
         self.connect((self.blocks_repeat_1, 0), (self.blocks_multiply_xx_1, 1))
         self.connect((self.blocks_repeat_2, 0), (self.blocks_int_to_float_1, 0))
         self.connect((self.blocks_repeat_3, 0), (self.blocks_int_to_float_0, 0))
         self.connect((self.blocks_throttle_0, 0), (self.wxgui_scopesink2_0, 0))
+        self.connect((self.channels_fading_model_0, 0), (self.blocks_complex_to_float_0, 0))
+        self.connect((self.channels_fading_model_1, 0), (self.blocks_complex_to_float_1, 0))
 
     def get_samp_rate(self):
         return self.samp_rate
@@ -184,8 +204,16 @@ class top_block(grc_wxgui.top_block_gui):
         self.wxgui_scopesink2_2.set_sample_rate(self.samp_rate)
         self.wxgui_scopesink2_1.set_sample_rate(self.samp_rate)
         self.wxgui_scopesink2_0.set_sample_rate(self.samp_rate)
+        self.channels_fading_model_1.set_fDTs(10.0/self.samp_rate)
+        self.channels_fading_model_0.set_fDTs(10.0/self.samp_rate)
         self.blocks_throttle_0.set_sample_rate(self.samp_rate)
         self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
+
+    def get_directory(self):
+        return self.directory
+
+    def set_directory(self, directory):
+        self.directory = directory
 
 
 def main(top_block_cls=top_block, options=None):
