@@ -7,7 +7,7 @@ import os.path
 def flipbit(x):
 	return abs(x - 1)
 
-f = scipy.fromfile(open('output/a_backscatter'), dtype=scipy.float32)
+f = scipy.fromfile(open('output/ab_backscatter'), dtype=scipy.float32)
 # f = scipy.fromfile(open('output/a_backscatter'), dtype=scipy.float32)
 a_data = scipy.fromfile(open('output/a_srcdata'), dtype=scipy.float32)
 b_data = scipy.fromfile(open('output/b_srcdata'), dtype=scipy.float32)
@@ -17,9 +17,9 @@ b_data = scipy.fromfile(open('output/b_srcdata'), dtype=scipy.float32)
 # for line in a_data:
 # 	bitter.write(str(line)+'\n')
 
-samples_per_bit = 8000
+samples_per_bit = 96000
 max_decoded_bits = 100
-first_bit = 0
+first_bit = int(a_data[0])
 avglist=[]
 bitlist=[]
 
@@ -31,6 +31,8 @@ for i in range(1 ,len(f) + 1):
 		break
 
 	power = abs( f[i - 1] )
+	# print power
+	# power = f[i - 1]
 	tot += power
 
 	# If we are at the cutoff between two windows
@@ -39,7 +41,7 @@ for i in range(1 ,len(f) + 1):
 		prevAvg = avg if len(avglist) == 0 else avglist[-1]
 
 		prevbit = first_bit if len(bitlist) == 0 else bitlist[-1]
-		if abs(avg - prevAvg) > 250:
+		if abs(avg - prevAvg) > 500:
 			bitlist.append( flipbit( prevbit ))
 		else:
 			bitlist.append( prevbit )
@@ -47,11 +49,11 @@ for i in range(1 ,len(f) + 1):
 		tot=0
 		avglist.append(avg)
 
-print('======== DECODED DATA ========')
-print('   avg    |    dbit   |   obit    ')
-print('----------+-----------+-----------')
+print('========== DECODED DATA ===========')
+print('   avg    |  dbit |  a_bit | b_bit ')
+print('----------+-------+--------+-------')
 for i in range(0, len(avglist)):
-	print(str(avglist[i])[:9] + " |     " + str(bitlist[i]) + "     |   " + str(int(a_data[i])))
+	print(str(avglist[i])[:9] + " |   " + str(bitlist[i]) + "   |    " + str(int(a_data[i])) + "   |   " + str(int(b_data[i])) + '   |')
 print('==========================')
 
 # print('======== BIT LIST ========')
@@ -68,7 +70,7 @@ BER = 0
 for i in range(0, len(bitlist)):
 	if bitlist[i] == a_data[i]:
 		BER = BER + 1
-BER = (BER * 100.0) / len(bitlist)
+BER = 100 - ((BER * 100.0) / len(bitlist))
 
 print('=========== SUMMARY ===========')
 print('      BER - ' + str(BER) + '%')
