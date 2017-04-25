@@ -50,11 +50,15 @@ for i in range(1 ,len(f) + 1):
 		avglist.append(avg)
 
 print('========== DECODED DATA ===========')
-print('   avg    |  dbit |  a_bit | b_bit ')
+print('   avg    |  dbit | a_bit | b_bit ')
 print('----------+-------+--------+-------')
 for i in range(0, len(avglist)):
-	print(str(avglist[i])[:9] + " |   " + str(bitlist[i]) + "   |    " + str(int(a_data[i])) + "   |   " + str(int(b_data[i])) + '   |')
-print('==========================')
+	print(str(avglist[i])[:9]
+			+ " |   " + str(bitlist[i])
+			+ "   |   " + str(int(a_data[i]))
+			+ "   |   " + str(int(b_data[i]))
+			+ '   |')
+print('===================================')
 
 # print('======== BIT LIST ========')
 # for item in bitlist:
@@ -72,7 +76,8 @@ for i in range(0, len(bitlist)):
 		BER = BER + 1
 BER = 100 - ((BER * 100.0) / len(bitlist))
 
-print('=========== SUMMARY ===========')
-print('      BER - ' + str(BER) + '%')
-print('   length - ' + str( len(bitlist) ) + ' bits')
-print('===============================')
+print('============= SUMMARY =============')
+print('             BER - ' + str(BER) + '%')
+print('          length - ' + str( len(bitlist) ) + ' bits')
+print(' samples per bit - ' + str(samples_per_bit))
+print('===================================')
