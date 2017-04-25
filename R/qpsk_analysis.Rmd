@@ -1,0 +1,92 @@
+---
+title: "Untitled"
+author: "Annie"
+date: "4/24/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(BAMMtools)
+library(Ckmeans.1d.dp)
+```
+
+
+```{r}
+x <- read.csv("ouput.csv")
+y <- as.data.frame(t(x))
+y <- tibble::rownames_to_column(y, "VALUE")
+for (i in 1:nrow(y))
+{
+    y[i,] <- sub("X", "", y[i,])
+}
+y$VALUE <- as.numeric(y$VALUE)
+quantile(y$VALUE, probs=c(0, 0.25, 0.5, 0.75, 1))
+quantile(y$VALUE, probs=c(0, 0.33, 0.66, 1))
+
+lines <- getJenksBreaks(test, 3)
+lines_kmeans <- Ckmeans.1d.dp(test, k=4)$centers
+test <- y$VALUE[y$VALUE < 25]
+plot(y$VALUE)
+for (i in 1:length(lines_kmeans))
+{
+    abline(h=lines_kmeans[i])
+}
+```
+
+
+```{r}
+
+
+my_clean <- function(filename)
+{
+    # read in data
+    x <- read.csv(filename)
+    # transpose rows to columns
+    new <- as.data.frame(t(x))
+    # get rowname as data
+    new <- tibble::rownames_to_column(new, "VALUE")
+    # very inefficient way to remove Xs
+    for (i in 1:nrow(new))
+    {
+        new[i,] <- sub("X", "", new[i,])
+    }
+    # convert to number
+    new$VALUE <- as.numeric(new$VALUE) 
+    # convert to same scale as Ckmeans
+    new$V1 <- as.numeric(new$V1) + 1
+    return(new)
+}
+
+cat <- my_clean("ouput_closer_harder_butnottoohard_butalsonotsymmetric.csv")
+# make prediction
+preds_c <- Ckmeans.1d.dp(cat$VALUE, k=4)$cluster 
+
+# switch 2 and 3
+cat$V1[cat$V1 == 2] <-5
+cat$V1[cat$V1 == 3] <-2
+cat$V1[cat$V1 == 5] <-3
+plot(cat$VALUE, col=cat$V1)
+# misclassification rate
+mean(preds != cat$V1)
+
+# plot our lines
+lines <- getJenksBreaks(cat$VALUE, 4)
+lines_kmeans <- Ckmeans.1d.dp(cat$VALUE, k=4)$centers
+colors <- c("red","blue", "green", "Purple")
+
+q <- quantile(cat$VALUE, c(0, 0.25,0.5, 0.75, 1))
+
+# make predictions
+preds_q <- cut(cat$VALUE, q, labels=FALSE, include.lowest = TRUE)
+plot(cat$VALUE, col=cat$V1)
+for (i in 1:length(lines))
+{
+    abline(h=q[i])
+    abline(h=lines[i], col="purple")
+    abline(h=lines_kmeans[i], col="orange")
+}
+
+
+```

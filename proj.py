@@ -2,6 +2,7 @@ import scipy
 from math import cos, sin, sqrt, pi
 import sys
 import os.path
+import csv
 
 # - Helper Functions
 def flipbit(x):
@@ -18,10 +19,12 @@ b_data = scipy.fromfile(open('output/b_srcdata'), dtype=scipy.float32)
 # 	bitter.write(str(line)+'\n')
 
 samples_per_bit = 96000
-max_decoded_bits = 100
+max_decoded_bits = 500
 first_bit = int(a_data[0])
 avglist=[]
 bitlist=[]
+
+thresholdlist=[]
 
 tot = 0
 for i in range(1 ,len(f) + 1):
@@ -31,8 +34,6 @@ for i in range(1 ,len(f) + 1):
 		break
 
 	power = abs( f[i - 1] )
-	# print power
-	# power = f[i - 1]
 	tot += power
 
 	# If we are at the cutoff between two windows
@@ -47,29 +48,30 @@ for i in range(1 ,len(f) + 1):
 			bitlist.append( prevbit )
 
 		tot=0
+
 		avglist.append(avg)
 
+# Print general info about decode
 print('========== DECODED DATA ===========')
 print('   avg    |  dbit | a_bit | b_bit ')
 print('----------+-------+--------+-------')
 for i in range(0, len(avglist)):
+	thresh = ( int( a_data[i]) + (int( b_data[i]) * 2) )
+	thresholdlist.append( thresh )
 	print(str(avglist[i])[:9]
 			+ " |   " + str(bitlist[i])
 			+ "   |   " + str(int(a_data[i]))
 			+ "   |   " + str(int(b_data[i]))
-			+ '   |')
+			+ '   |' + str(thresh))
 print('===================================')
 
-# print('======== BIT LIST ========')
-# for item in bitlist:
-# 	print(item)
-# print('==========================')
+# output data points with expected to quickly graph
+with open("ouput_closer_harder_butnottoohard_butalsonotsymmetric.csv", "w") as f:
+		writer = csv.writer(f)
+		writer.writerow(avglist)
+		writer.writerow(thresholdlist)
 
-# print('======== ORIGINAL BIT LIST ========')
-# for bit in a_data:
-# 	print(int(bit))
-# print('===================================')
-
+# Calculate the Bit Error Rate
 BER = 0
 for i in range(0, len(bitlist)):
 	if bitlist[i] == a_data[i]:

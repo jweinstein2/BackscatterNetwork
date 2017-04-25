@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Mon Apr 24 19:25:06 2017
+# Generated: Mon Apr 24 21:44:56 2017
 ##################################################
 
 if __name__ == '__main__':
@@ -126,8 +126,8 @@ class top_block(grc_wxgui.top_block_gui):
         self.blocks_multiply_xx_1 = blocks.multiply_vff(1)
         self.blocks_multiply_xx_0 = blocks.multiply_vff(1)
         self.blocks_multiply_const_vxx_2 = blocks.multiply_const_vff((1, ))
-        self.blocks_multiply_const_vxx_1 = blocks.multiply_const_vff((1, ))
-        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vff((2, ))
+        self.blocks_multiply_const_vxx_1 = blocks.multiply_const_vff((.6, ))
+        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vff((.4, ))
         self.blocks_int_to_float_1 = blocks.int_to_float(1, 1)
         self.blocks_int_to_float_0 = blocks.int_to_float(1, 1)
         self.blocks_file_source_0 = blocks.file_source(gr.sizeof_float*1, '/Users/jaredweinstein/Desktop/CS434Project/src/carrier', True)
