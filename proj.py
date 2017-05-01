@@ -18,7 +18,7 @@ b_data = scipy.fromfile(open('output/b_srcdata'), dtype=scipy.float32)
 # for line in a_data:
 # 	bitter.write(str(line)+'\n')
 
-samples_per_bit = 96000
+samples_per_bit = 40960
 max_decoded_bits = 500
 first_bit = int(a_data[0])
 avglist=[]
@@ -66,10 +66,10 @@ for i in range(0, len(avglist)):
 print('===================================')
 
 # output data points with expected to quickly graph
-with open("ouput_closer_harder_butnottoohard_butalsonotsymmetric.csv", "w") as f:
-		writer = csv.writer(f)
-		writer.writerow(avglist)
-		writer.writerow(thresholdlist)
+# with open("modatamoproblems.csv", "w") as f:
+# 		writer = csv.writer(f)
+# 		writer.writerow(avglist)
+# 		writer.writerow(thresholdlist)
 
 # Calculate the Bit Error Rate
 BER = 0

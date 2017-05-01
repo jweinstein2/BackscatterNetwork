@@ -771,7 +771,7 @@
     </param>
     <param>
       <key>const</key>
-      <value>2</value>
+      <value>.5</value>
     </param>
     <param>
       <key>affinity</key>
@@ -873,7 +873,7 @@
     </param>
     <param>
       <key>const</key>
-      <value>1</value>
+      <value>2.5/11</value>
     </param>
     <param>
       <key>affinity</key>
@@ -1046,7 +1046,7 @@
     </param>
     <param>
       <key>interp</key>
-      <value>96000</value>
+      <value>40960</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -1097,7 +1097,7 @@
     </param>
     <param>
       <key>interp</key>
-      <value>96000</value>
+      <value>40960</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -1219,6 +1219,53 @@
     </param>
   </block>
   <block>
+    <key>blocks_rms_xx</key>
+    <param>
+      <key>alpha</key>
+      <value>0.0001</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(208, 364)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>blocks_rms_xx_0</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
     <key>blocks_throttle</key>
     <param>
       <key>alias</key>
@@ -1314,6 +1361,105 @@
     <param>
       <key>style</key>
       <value>wx.NB_TOP</value>
+    </param>
+  </block>
+  <block>
+    <key>wxgui_numbersink2</key>
+    <param>
+      <key>avg_alpha</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>average</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>decimal_places</key>
+      <value>10</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>factor</key>
+      <value>1.0</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(368, 316)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>grid_pos</key>
+      <value></value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>wxgui_numbersink2_0</value>
+    </param>
+    <param>
+      <key>max_value</key>
+      <value>100</value>
+    </param>
+    <param>
+      <key>min_value</key>
+      <value>-100</value>
+    </param>
+    <param>
+      <key>notebook</key>
+      <value>n, 0</value>
+    </param>
+    <param>
+      <key>number_rate</key>
+      <value>15</value>
+    </param>
+    <param>
+      <key>peak_hold</key>
+      <value>False</value>
+    </param>
+    <param>
+      <key>ref_level</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>samp_rate</key>
+      <value>samp_rate</value>
+    </param>
+    <param>
+      <key>show_gauge</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>title</key>
+      <value>Ivan Number Sink</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>units</key>
+      <value>Units</value>
+    </param>
+    <param>
+      <key>win_size</key>
+      <value></value>
     </param>
   </block>
   <block>
@@ -1427,7 +1573,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(208, 364)</value>
+      <value>(752, 388)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1873,6 +2019,12 @@
   </connection>
   <connection>
     <source_block_id>blocks_multiply_const_vxx_2</source_block_id>
+    <sink_block_id>blocks_rms_xx_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_multiply_const_vxx_2</source_block_id>
     <sink_block_id>wxgui_scopesink2_1</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
@@ -1910,6 +2062,12 @@
   <connection>
     <source_block_id>blocks_repeat_3</source_block_id>
     <sink_block_id>blocks_int_to_float_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_rms_xx_0</source_block_id>
+    <sink_block_id>wxgui_numbersink2_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>

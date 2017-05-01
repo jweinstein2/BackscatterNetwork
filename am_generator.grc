@@ -139,7 +139,7 @@
     <key>analog_sig_source_x</key>
     <param>
       <key>amp</key>
-      <value>500</value>
+      <value>1</value>
     </param>
     <param>
       <key>alias</key>
@@ -159,7 +159,7 @@
     </param>
     <param>
       <key>freq</key>
-      <value>300000</value>
+      <value>960000</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -191,7 +191,7 @@
     </param>
     <param>
       <key>samp_rate</key>
-      <value>9600000</value>
+      <value>4096000</value>
     </param>
     <param>
       <key>waveform</key>

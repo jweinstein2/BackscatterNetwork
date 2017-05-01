@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Mon Apr 24 21:44:56 2017
+# Generated: Mon May  1 01:29:15 2017
 ##################################################
 
 if __name__ == '__main__':
@@ -22,6 +22,7 @@ from gnuradio import gr
 from gnuradio import wxgui
 from gnuradio.eng_option import eng_option
 from gnuradio.filter import firdes
+from gnuradio.wxgui import numbersink2
 from gnuradio.wxgui import scopesink2
 from grc_gnuradio import wxgui as grc_wxgui
 from optparse import OptionParser
@@ -118,16 +119,34 @@ class top_block(grc_wxgui.top_block_gui):
         	y_axis_label='Counts',
         )
         self.n.GetPage(1).Add(self.wxgui_scopesink2_0.win)
+        self.wxgui_numbersink2_0 = numbersink2.number_sink_f(
+        	self.n.GetPage(0).GetWin(),
+        	unit='Units',
+        	minval=-100,
+        	maxval=100,
+        	factor=1.0,
+        	decimal_places=10,
+        	ref_level=0,
+        	sample_rate=samp_rate,
+        	number_rate=15,
+        	average=False,
+        	avg_alpha=None,
+        	label='Ivan Number Sink',
+        	peak_hold=False,
+        	show_gauge=True,
+        )
+        self.n.GetPage(0).Add(self.wxgui_numbersink2_0.win)
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
+        self.blocks_rms_xx_0 = blocks.rms_ff(0.0001)
         self.blocks_repeat_3 = blocks.repeat(gr.sizeof_int*1, 3)
         self.blocks_repeat_2 = blocks.repeat(gr.sizeof_int*1, 2)
-        self.blocks_repeat_1 = blocks.repeat(gr.sizeof_float*1, 96000)
-        self.blocks_repeat_0 = blocks.repeat(gr.sizeof_float*1, 96000)
+        self.blocks_repeat_1 = blocks.repeat(gr.sizeof_float*1, 40960)
+        self.blocks_repeat_0 = blocks.repeat(gr.sizeof_float*1, 40960)
         self.blocks_multiply_xx_1 = blocks.multiply_vff(1)
         self.blocks_multiply_xx_0 = blocks.multiply_vff(1)
-        self.blocks_multiply_const_vxx_2 = blocks.multiply_const_vff((1, ))
-        self.blocks_multiply_const_vxx_1 = blocks.multiply_const_vff((.6, ))
-        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vff((.4, ))
+        self.blocks_multiply_const_vxx_2 = blocks.multiply_const_vff((2.5/11, ))
+        self.blocks_multiply_const_vxx_1 = blocks.multiply_const_vff((1, ))
+        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vff((.5, ))
         self.blocks_int_to_float_1 = blocks.int_to_float(1, 1)
         self.blocks_int_to_float_0 = blocks.int_to_float(1, 1)
         self.blocks_file_source_0 = blocks.file_source(gr.sizeof_float*1, '/Users/jaredweinstein/Desktop/CS434Project/src/carrier', True)
@@ -169,6 +188,7 @@ class top_block(grc_wxgui.top_block_gui):
         self.connect((self.blocks_multiply_const_vxx_2, 0), (self.blocks_file_sink_1, 0))
         self.connect((self.blocks_multiply_const_vxx_2, 0), (self.blocks_multiply_xx_0, 1))
         self.connect((self.blocks_multiply_const_vxx_2, 0), (self.blocks_multiply_xx_1, 0))
+        self.connect((self.blocks_multiply_const_vxx_2, 0), (self.blocks_rms_xx_0, 0))
         self.connect((self.blocks_multiply_const_vxx_2, 0), (self.wxgui_scopesink2_1, 0))
         self.connect((self.blocks_multiply_xx_0, 0), (self.blocks_multiply_const_vxx_1, 0))
         self.connect((self.blocks_multiply_xx_1, 0), (self.blocks_multiply_const_vxx_0, 0))
@@ -176,6 +196,7 @@ class top_block(grc_wxgui.top_block_gui):
         self.connect((self.blocks_repeat_1, 0), (self.blocks_multiply_xx_1, 1))
         self.connect((self.blocks_repeat_2, 0), (self.blocks_int_to_float_1, 0))
         self.connect((self.blocks_repeat_3, 0), (self.blocks_int_to_float_0, 0))
+        self.connect((self.blocks_rms_xx_0, 0), (self.wxgui_numbersink2_0, 0))
         self.connect((self.blocks_throttle_0, 0), (self.wxgui_scopesink2_0, 0))
 
     def get_samp_rate(self):
