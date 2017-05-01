@@ -8,6 +8,36 @@ import csv
 def flipbit(x):
 	return abs(x - 1)
 
+# - Calculate Thresholds
+avg_neither = scipy.fromfile(open('output/avg_neither'), dtype=scipy.float32)
+avg_a = scipy.fromfile(open('output/avg_a'), dtype=scipy.float32)
+avg_b = scipy.fromfile(open('output/avg_b'), dtype=scipy.float32)
+avg_both = scipy.fromfile(open('output/avg_b'), dtype=scipy.float32)
+
+neither = sum(avg_neither) / len(avg_neither)
+a = sum(avg_a) / len(avg_a)
+b = sum(avg_a) / len(avg_a)
+both = sum(avg_both) / len(avg_both)
+
+if (a > b):
+	print 'ERROR: assumption that a < b violated'
+
+t1 = (neither + a) / 2
+t2 = (a + b) / 2
+t3 = (b + both) / 2
+
+print ('========== DECODED DATA ===========')
+print ('     - ' + str(neither))
+print ('  t1 - ' + str(t1))
+print ('     - ' + str(a))
+print ('  t2 - ' + str(t2))
+print ('     - ' + str(b))
+print ('  t3 - ' + str(t3))
+print ('     - ' + str(both))
+print ('===================================')
+
+quit()
+
 f = scipy.fromfile(open('output/ab_backscatter'), dtype=scipy.float32)
 # f = scipy.fromfile(open('output/a_backscatter'), dtype=scipy.float32)
 a_data = scipy.fromfile(open('output/a_srcdata'), dtype=scipy.float32)
