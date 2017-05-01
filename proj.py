@@ -12,11 +12,11 @@ def flipbit(x):
 avg_neither = scipy.fromfile(open('output/avg_neither'), dtype=scipy.float32)
 avg_a = scipy.fromfile(open('output/avg_a'), dtype=scipy.float32)
 avg_b = scipy.fromfile(open('output/avg_b'), dtype=scipy.float32)
-avg_both = scipy.fromfile(open('output/avg_b'), dtype=scipy.float32)
+avg_both = scipy.fromfile(open('output/avg_both'), dtype=scipy.float32)
 
 neither = sum(avg_neither) / len(avg_neither)
 a = sum(avg_a) / len(avg_a)
-b = sum(avg_a) / len(avg_a)
+b = sum(avg_b) / len(avg_b)
 both = sum(avg_both) / len(avg_both)
 
 if (a > b):
