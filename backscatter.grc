@@ -93,6 +93,60 @@
     </param>
     <param>
       <key>_coordinate</key>
+      <value>(160, 8)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>a_power</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>.5</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(176, 64)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>b_power</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>1</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
       <value>(96, 64)</value>
     </param>
     <param>
@@ -771,7 +825,7 @@
     </param>
     <param>
       <key>const</key>
-      <value>.5</value>
+      <value>b_power</value>
     </param>
     <param>
       <key>affinity</key>
@@ -822,7 +876,7 @@
     </param>
     <param>
       <key>const</key>
-      <value>1</value>
+      <value>a_power</value>
     </param>
     <param>
       <key>affinity</key>

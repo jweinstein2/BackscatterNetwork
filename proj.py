@@ -8,23 +8,38 @@ import csv
 def flipbit(x):
 	return abs(x - 1)
 
-# - Calculate Thresholds
-avg_neither = scipy.fromfile(open('output/avg_neither'), dtype=scipy.float32)
-avg_a = scipy.fromfile(open('output/avg_a'), dtype=scipy.float32)
-avg_b = scipy.fromfile(open('output/avg_b'), dtype=scipy.float32)
-avg_both = scipy.fromfile(open('output/avg_both'), dtype=scipy.float32)
+def bits_from_average(avg):
+	# Returns (a, b)
+	if avg >= t3:
+		return (1, 1)
+	if avg >= t2:
+		return (1, 0)
+	if avg >= t1:
+		return (0, 1)
+	return (0, 0)
 
+# - Calculate Thresholds
+avg_neither = scipy.fromfile(open('output/avg_neither'), dtype=scipy.float32)[:100]
+avg_a = scipy.fromfile(open('output/avg_a'), dtype=scipy.float32)[:100]
+avg_b = scipy.fromfile(open('output/avg_b'), dtype=scipy.float32)[:100]
+avg_both = scipy.fromfile(open('output/avg_both'), dtype=scipy.float32)[:100]
+
+# The center of each of the 4 bands (uses only first 100 bits)
 neither = sum(avg_neither) / len(avg_neither)
 a = sum(avg_a) / len(avg_a)
 b = sum(avg_b) / len(avg_b)
 both = sum(avg_both) / len(avg_both)
 
-if (a > b):
-	print 'ERROR: assumption that a < b violated'
-
+# Get the three thresholds based on averages of the four bands
 t1 = (neither + a) / 2
 t2 = (a + b) / 2
 t3 = (b + both) / 2
+
+# Make sure that our bands are in correct order.
+lst = [neither, t1, a, t2, b, t3, both]
+if (sorted(lst) != lst):
+	print 'ERROR: assumption [neither < a < b < both] violated'
+	quit()
 
 print ('========== DECODED DATA ===========')
 print ('     - ' + str(neither))
@@ -36,7 +51,6 @@ print ('  t3 - ' + str(t3))
 print ('     - ' + str(both))
 print ('===================================')
 
-quit()
 
 f = scipy.fromfile(open('output/ab_backscatter'), dtype=scipy.float32)
 # f = scipy.fromfile(open('output/a_backscatter'), dtype=scipy.float32)
@@ -50,11 +64,11 @@ b_data = scipy.fromfile(open('output/b_srcdata'), dtype=scipy.float32)
 
 samples_per_bit = 40960
 max_decoded_bits = 500
-first_bit = int(a_data[0])
 avglist=[]
-bitlist=[]
+abitlist=[]
+bbitlist=[]
 
-thresholdlist=[]
+# thresholdlist=[]
 
 tot = 0
 for i in range(1 ,len(f) + 1):
@@ -69,13 +83,10 @@ for i in range(1 ,len(f) + 1):
 	# If we are at the cutoff between two windows
 	if i % (samples_per_bit) == 0:
 		avg = tot / samples_per_bit
-		prevAvg = avg if len(avglist) == 0 else avglist[-1]
+		bits = bits_from_average(avg)
 
-		prevbit = first_bit if len(bitlist) == 0 else bitlist[-1]
-		if abs(avg - prevAvg) > 500:
-			bitlist.append( flipbit( prevbit ))
-		else:
-			bitlist.append( prevbit )
+		abitlist.append(bits[0])
+		bbitlist.append(bits[1])
 
 		tot=0
 
@@ -83,16 +94,17 @@ for i in range(1 ,len(f) + 1):
 
 # Print general info about decode
 print('========== DECODED DATA ===========')
-print('   avg    |  dbit | a_bit | b_bit ')
-print('----------+-------+--------+-------')
+print('   avg    |  dbits | a_bit | b_bit ')
+print('----------+--------+--------+-------')
 for i in range(0, len(avglist)):
-	thresh = ( int( a_data[i]) + (int( b_data[i]) * 2) )
-	thresholdlist.append( thresh )
+	dbits = bits_from_average(avglist[i])
+	# thresh = ( int( a_data[i]) + (int( b_data[i]) * 2) )
+	# thresholdlist.append( thresh )
 	print(str(avglist[i])[:9]
-			+ " |   " + str(bitlist[i])
-			+ "   |   " + str(int(a_data[i]))
-			+ "   |   " + str(int(b_data[i]))
-			+ '   |' + str(thresh))
+			+ " | " + str((abitlist[i], bbitlist[i]))
+			+ " |   " + str(int(a_data[i]))
+			+ "   |   " + str(int(b_data[i])))
+			# + '   |' + str(thresh))
 print('===================================')
 
 # output data points with expected to quickly graph
@@ -103,13 +115,15 @@ print('===================================')
 
 # Calculate the Bit Error Rate
 BER = 0
-for i in range(0, len(bitlist)):
-	if bitlist[i] == a_data[i]:
+for i in range(0, len(abitlist)):
+	if abitlist[i] == a_data[i]:
 		BER = BER + 1
-BER = 100 - ((BER * 100.0) / len(bitlist))
+	if bbitlist[i] == b_data[i]:
+		BER = BER + 1
+BER = 100 - ((BER * 100.0) / (len(abitlist) * 2))
 
 print('============= SUMMARY =============')
 print('             BER - ' + str(BER) + '%')
-print('          length - ' + str( len(bitlist) ) + ' bits')
+print('          length - ' + str( len(abitlist) ) + ' bits')
 print(' samples per bit - ' + str(samples_per_bit))
 print('===================================')
