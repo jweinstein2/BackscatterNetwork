@@ -96,7 +96,7 @@ for i in range(1 ,len(f) + 1):
 # Print general info about decode
 print('========== DECODED DATA ===========')
 print('   avg    |  dbits | a_bit | b_bit ')
-print('----------+--------+--------+-------')
+print('----------+--------+-------+-------')
 for i in range(0, len(avglist)):
 	dbits = bits_from_average(avglist[i])
 	# thresh = ( int( a_data[i]) + (int( b_data[i]) * 2) )
@@ -124,7 +124,7 @@ for i in range(0, len(abitlist)):
 BER = 100 - ((BER * 100.0) / (len(abitlist) * 2))
 
 print('============= SUMMARY =============')
-print('             BER - ' + str(BER) + '%')
+print('             BER - ' + str(BER)[:5] + '%')
 print('          length - ' + str( len(abitlist) ) + ' bits')
 print(' samples per bit - ' + str(samples_per_bit))
 print('===================================')

@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Tue May  2 00:20:06 2017
+# Generated: Tue May  2 01:52:06 2017
 ##################################################
 
 if __name__ == '__main__':
@@ -38,10 +38,10 @@ class top_block(grc_wxgui.top_block_gui):
         ##################################################
         # Variables
         ##################################################
+        self.samples_per_bit = samples_per_bit = 40960
         self.samp_rate = samp_rate = 800000
-        self.directory = directory = 0
         self.b_power = b_power = 1
-        self.a_power = a_power = .5
+        self.a_power = a_power = .97
 
         ##################################################
         # Blocks
@@ -201,6 +201,12 @@ class top_block(grc_wxgui.top_block_gui):
         self.connect((self.blocks_rms_xx_0, 0), (self.wxgui_numbersink2_0, 0))
         self.connect((self.blocks_throttle_0, 0), (self.wxgui_scopesink2_0, 0))
 
+    def get_samples_per_bit(self):
+        return self.samples_per_bit
+
+    def set_samples_per_bit(self, samples_per_bit):
+        self.samples_per_bit = samples_per_bit
+
     def get_samp_rate(self):
         return self.samp_rate
 
@@ -212,12 +218,6 @@ class top_block(grc_wxgui.top_block_gui):
         self.wxgui_scopesink2_1.set_sample_rate(self.samp_rate)
         self.wxgui_scopesink2_0.set_sample_rate(self.samp_rate)
         self.blocks_throttle_0.set_sample_rate(self.samp_rate)
-
-    def get_directory(self):
-        return self.directory
-
-    def set_directory(self, directory):
-        self.directory = directory
 
     def get_b_power(self):
         return self.b_power

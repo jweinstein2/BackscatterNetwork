@@ -105,7 +105,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>.5</value>
+      <value>.97</value>
     </param>
   </block>
   <block>
@@ -915,7 +915,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(32, 168)</value>
+      <value>(32, 160)</value>
     </param>
     <param>
       <key>_rotation</key>
