@@ -82,10 +82,18 @@
     </param>
   </block>
   <block>
-    <key>variable</key>
+    <key>variable_config</key>
     <param>
       <key>comment</key>
       <value></value>
+    </param>
+    <param>
+      <key>config_file</key>
+      <value>/Users/jaredweinstein/Desktop/CS434Project/src/apow</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>.5</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -93,7 +101,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(360, 8)</value>
+      <value>(360, 4)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -104,15 +112,35 @@
       <value>a_power</value>
     </param>
     <param>
-      <key>value</key>
-      <value>.97</value>
+      <key>option</key>
+      <value>power</value>
+    </param>
+    <param>
+      <key>section</key>
+      <value>a</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+    <param>
+      <key>writeback</key>
+      <value>None</value>
     </param>
   </block>
   <block>
-    <key>variable</key>
+    <key>variable_config</key>
     <param>
       <key>comment</key>
       <value></value>
+    </param>
+    <param>
+      <key>config_file</key>
+      <value>/Users/jaredweinstein/Desktop/CS434Project/src/apow</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>1</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -120,7 +148,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(440, 8)</value>
+      <value>(504, 4)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -131,8 +159,20 @@
       <value>b_power</value>
     </param>
     <param>
-      <key>value</key>
-      <value>1</value>
+      <key>option</key>
+      <value>power</value>
+    </param>
+    <param>
+      <key>section</key>
+      <value>b</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>real</value>
+    </param>
+    <param>
+      <key>writeback</key>
+      <value>None</value>
     </param>
   </block>
   <block>

@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Tue May  2 01:52:06 2017
+# Generated: Tue May  2 14:55:43 2017
 ##################################################
 
 if __name__ == '__main__':
@@ -16,6 +16,7 @@ if __name__ == '__main__':
         except:
             print "Warning: failed to XInitThreads()"
 
+from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import eng_notation
 from gnuradio import gr
@@ -26,6 +27,7 @@ from gnuradio.wxgui import numbersink2
 from gnuradio.wxgui import scopesink2
 from grc_gnuradio import wxgui as grc_wxgui
 from optparse import OptionParser
+import ConfigParser
 import numpy
 import wx
 
@@ -42,6 +44,11 @@ class top_block(grc_wxgui.top_block_gui):
         self.samp_rate = samp_rate = 800000
         self.b_power = b_power = 1
         self.a_power = a_power = .97
+        self._a_pow_config = ConfigParser.ConfigParser()
+        self._a_pow_config.read('/Users/jaredweinstein/Desktop/CS434Project/src/apow')
+        try: a_pow = self._a_pow_config.getfloat('a', 'power')
+        except: a_pow = .5
+        self.a_pow = a_pow
 
         ##################################################
         # Blocks
@@ -121,6 +128,23 @@ class top_block(grc_wxgui.top_block_gui):
         	y_axis_label='Counts',
         )
         self.n.GetPage(1).Add(self.wxgui_scopesink2_0.win)
+        self.wxgui_numbersink2_2 = numbersink2.number_sink_f(
+        	self.n.GetPage(0).GetWin(),
+        	unit='Units',
+        	minval=-100,
+        	maxval=100,
+        	factor=1.0,
+        	decimal_places=10,
+        	ref_level=0,
+        	sample_rate=samp_rate,
+        	number_rate=15,
+        	average=False,
+        	avg_alpha=None,
+        	label='Variable Config',
+        	peak_hold=False,
+        	show_gauge=True,
+        )
+        self.n.GetPage(0).Add(self.wxgui_numbersink2_2.win)
         self.wxgui_numbersink2_0 = numbersink2.number_sink_f(
         	self.n.GetPage(0).GetWin(),
         	unit='Units',
@@ -147,7 +171,7 @@ class top_block(grc_wxgui.top_block_gui):
         self.blocks_multiply_xx_1 = blocks.multiply_vff(1)
         self.blocks_multiply_xx_0 = blocks.multiply_vff(1)
         self.blocks_multiply_const_vxx_2 = blocks.multiply_const_vff((1, ))
-        self.blocks_multiply_const_vxx_1 = blocks.multiply_const_vff((a_power, ))
+        self.blocks_multiply_const_vxx_1 = blocks.multiply_const_vff((a_pow, ))
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vff((b_power, ))
         self.blocks_int_to_float_1 = blocks.int_to_float(1, 1)
         self.blocks_int_to_float_0 = blocks.int_to_float(1, 1)
@@ -164,20 +188,24 @@ class top_block(grc_wxgui.top_block_gui):
         self.blocks_file_sink_0.set_unbuffered(False)
         self.blocks_add_xx_1 = blocks.add_vff(1)
         self.blocks_add_xx_0 = blocks.add_vff(1)
+        self.blocks_abs_xx_0 = blocks.abs_ff(1)
         self.analog_random_source_x_1 = blocks.vector_source_i(map(int, numpy.random.randint(0, 2, 1000)), True)
         self.analog_random_source_x_0 = blocks.vector_source_i(map(int, numpy.random.randint(0, 2, 1000)), True)
+        self.analog_const_source_x_0 = analog.sig_source_f(0, analog.GR_CONST_WAVE, 0, 0, a_pow)
 
         ##################################################
         # Connections
         ##################################################
+        self.connect((self.analog_const_source_x_0, 0), (self.wxgui_numbersink2_2, 0))
         self.connect((self.analog_random_source_x_0, 0), (self.blocks_repeat_3, 0))
         self.connect((self.analog_random_source_x_1, 0), (self.blocks_repeat_2, 0))
+        self.connect((self.blocks_abs_xx_0, 0), (self.blocks_multiply_const_vxx_2, 0))
         self.connect((self.blocks_add_xx_0, 0), (self.blocks_add_xx_1, 0))
         self.connect((self.blocks_add_xx_0, 0), (self.blocks_file_sink_0, 0))
         self.connect((self.blocks_add_xx_0, 0), (self.blocks_throttle_0, 0))
         self.connect((self.blocks_add_xx_1, 0), (self.blocks_file_sink_3, 0))
         self.connect((self.blocks_add_xx_1, 0), (self.wxgui_scopesink2_4, 0))
-        self.connect((self.blocks_file_source_0, 0), (self.blocks_multiply_const_vxx_2, 0))
+        self.connect((self.blocks_file_source_0, 0), (self.blocks_abs_xx_0, 0))
         self.connect((self.blocks_int_to_float_0, 0), (self.blocks_file_sink_2, 0))
         self.connect((self.blocks_int_to_float_0, 0), (self.blocks_repeat_0, 0))
         self.connect((self.blocks_int_to_float_0, 0), (self.wxgui_scopesink2_2, 0))
@@ -231,7 +259,14 @@ class top_block(grc_wxgui.top_block_gui):
 
     def set_a_power(self, a_power):
         self.a_power = a_power
-        self.blocks_multiply_const_vxx_1.set_k((self.a_power, ))
+
+    def get_a_pow(self):
+        return self.a_pow
+
+    def set_a_pow(self, a_pow):
+        self.a_pow = a_pow
+        self.blocks_multiply_const_vxx_1.set_k((self.a_pow, ))
+        self.analog_const_source_x_0.set_offset(self.a_pow)
 
 
 def main(top_block_cls=top_block, options=None):
