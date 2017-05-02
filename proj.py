@@ -4,6 +4,9 @@ import sys
 import os.path
 import csv
 
+samples_per_bit = 40960
+max_decoded_bits = 500
+
 # - Helper Functions
 def flipbit(x):
 	return abs(x - 1)
@@ -13,16 +16,16 @@ def bits_from_average(avg):
 	if avg >= t3:
 		return (1, 1)
 	if avg >= t2:
-		return (1, 0)
-	if avg >= t1:
 		return (0, 1)
+	if avg >= t1:
+		return (1, 0)
 	return (0, 0)
 
 # - Calculate Thresholds
-avg_neither = scipy.fromfile(open('output/avg_neither'), dtype=scipy.float32)[:100]
-avg_a = scipy.fromfile(open('output/avg_a'), dtype=scipy.float32)[:100]
-avg_b = scipy.fromfile(open('output/avg_b'), dtype=scipy.float32)[:100]
-avg_both = scipy.fromfile(open('output/avg_both'), dtype=scipy.float32)[:100]
+avg_neither = scipy.fromfile(open('output/avg_neither'), dtype=scipy.float32)[samples_per_bit:samples_per_bit + 100]
+avg_a = scipy.fromfile(open('output/avg_a'), dtype=scipy.float32)[samples_per_bit:samples_per_bit + 100]
+avg_b = scipy.fromfile(open('output/avg_b'), dtype=scipy.float32)[samples_per_bit:samples_per_bit + 100]
+avg_both = scipy.fromfile(open('output/avg_both'), dtype=scipy.float32)[samples_per_bit:samples_per_bit + 100]
 
 # The center of each of the 4 bands (uses only first 100 bits)
 neither = sum(avg_neither) / len(avg_neither)
@@ -62,8 +65,6 @@ b_data = scipy.fromfile(open('output/b_srcdata'), dtype=scipy.float32)
 # for line in a_data:
 # 	bitter.write(str(line)+'\n')
 
-samples_per_bit = 40960
-max_decoded_bits = 500
 avglist=[]
 abitlist=[]
 bbitlist=[]
