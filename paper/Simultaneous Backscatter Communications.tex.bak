@@ -1,0 +1,167 @@
+\documentclass[letterpaper, 10 pt, conference]{IEEEconf}
+
+\usepackage{fancyhdr}
+\usepackage{amsmath,amsfonts,graphicx}
+\usepackage{cite}
+\usepackage{caption}
+\usepackage{siunitx}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{hyperref}
+\fancyhf{} % clear all header and footers
+\renewcommand{\headrulewidth}{0pt} % remove the header rule
+\cfoot{\thepage}
+\captionsetup[figure]{font=normalsize,labelfont=bf}
+\setlength{\footskip}{45pt}
+\title{\LARGE \bf
+Enabling Concurrent Ambient Backscatter Communications in Multipoint-to-Point Topologies
+}
+
+
+\author{Andr{\'e} Monteiro, Jared Weinstein, R.I. Zelaya\\
+Yale University\\
+\{andre.monteiro, jared.weinstein, rotman.zelaya\}@yale.edu
+}
+
+\providecommand{\keywords}[1]{\textbf{\textit{Key Words---}} #1}
+
+\pagestyle{fancy}
+\begin{document}
+
+\nocite{*}
+
+\maketitle
+\thispagestyle{fancy}
+\pagestyle{fancy}
+
+
+
+\begin{abstract}
+
+This paper introduces two mechanisms to decode simultaneous ambient backscatter communications in a multipoint-to-point topology. We model a network where two independent wireless nodes attempt to communicate concurrently with the same receiver by backscattering an arbitrary AM signal. We present the operation of our algorithms by implementing the aforementioned network in GNU Radio Companion. We argue that, given the right conditions, our decoding procedures allow a receiver to decode simultaneous ambient backscatter transmissions with an acceptable Bit Error Rate. To the best of our knowledge, this is the first work that studies multipoint-to-point concurrent backscatter communications. 
+
+\end{abstract}
+\keywords{Ambient Backscatter; Wireless Communications; Modulation and Demodulation.}
+
+
+\section{INTRODUCTION}
+
+Low-powered wireless devices are becoming increasingly pervasive in modern communication infrastructures. The proliferation of the IoT (Internet of Things) has propelled the integration of wireless systems in what could be considered unusual places, such as books, thermostats, and even the human body \cite{jang2016stent}. As these devices become smaller and more numerous, a clear challenge is how to power them. Incorporating wires and/or batteries on these devices is clearly an unfeasible solution. Just imagine how uncomfortable it would be to have wires running all over your body just to measure your glucose level.
+
+A clever solution to the power-delivery problem was proposed by Smith et al. in their seminal paper on ambient backscatter \cite{liu2013ambient}. In short, their solution allows two battery-free devices to communicate with each other by backscattering (i.e., reflecting) ambient TV signals. A device transmitting information switches between reflecting and non-reflecting states to convey (modulate) either a "1" or a "0" bit, respectively. The backscattering is done at a much lower data rate than the ambient signals so that the receiver can demodulate the information through averaging. By reusing generic ambient signals, the devices have no need to generate their own carrier waves, which in turn means that no energy source other than the exogenous signals is required.
+
+In this paper, we ask the following question: can a receiver in a backscatter network decode two simultaneous data streams through Layer 1 algorithms? More generally, we address the challenge of demodulating concurrent transmissions in a multipoint-to-point ambient backscatter network. We propose two decoding mechanisms. The first one, which we call \textit{Demodulation via Power Superposition}, discovers the possible power levels of the sum (superposition) of the signals sent individually and independently by each transmitter. Each power level represents a sequence of of bits, one bit for each transmitter. The second solution, which we call \textit{Demodulation via Time Offset}, works by allowing one of the data streams to be ahead of the other. Power estimations are performed at specific time intervals to determine which bit and which transmitter were involved in the signal's power fluctuation. We specify under which assumptions these algorithms work, as well as the pros and cons of each approach. We simulate the topology of interest and test the performance of our decoding mechanisms in GNU Radio Companion.
+
+The remainder of this paper is organized as follows. In Section 2 we describe the physical conditions under which we assume our simulated network operates. We calculate the estimated power of the AM signal that the devices involved receive and present all the relevant assumptions. In Section 3 we describe the mechanisms used by the backscatterers in our simulation to transmit information. In Section 4 we present our demodulation algorithms as well as the benefits and setbacks of each. We evaluate the performance of these algorithms in Section 5 and derive conclusions in Section 6.
+
+\section{SCENARIO OF INTEREST}
+
+Figure 1 illustrates the scenario under consideration. We study a multipoint-to-point topology in which $B_1$ and $B_2$ attempt to communicate simultaneously with $R$ by backscattering an arbitrary AM signal. Our model positions the AM transmitter 6.47 kilometers away from the backscatterers and the receiving node. This is the approximate distance between the Arthur K. Watson Hall at Yale University and the WELI-AM radio station in New Haven, Connecticut. This particular station operates in a 10 kHz-wide channel centered at a frequency of 960 kHz and transmits with an EIRP (Effective Isotropic Radiated Power) of 5 kW \cite{weli_am}. The proximity of this radio station made it an appealing selection for our model. Furthermore, $B_1$, $B_2$, and $R$ are all separated by a distance of 2.5 ft.
+
+Let $S_{AM}(t)$ be the signal emitted by the AM transmitter at time instant $t$. Let $P\{\cdot\}$ represent the average power of a signal. Then, for the radio station under consideration, $P\{S_{AM}(t)\}=67$ dbm. Due to the relatively short distance between $B_1$, $B_2$, and $R$, we assume the power of the received signal at this three points is the same. In fact, by omitting the effects of multipath, noise, and phase offset on the signal transmitted by the radio station, we assume that all three devices receive the exact same signal at any time instant. We let this signal be $S_R(t)$. Consequently, $S_R(t)$ is basically a copy of $S_{AM}(t)$ multiplied by some factor that depends exclusively on path loss and antenna gain. Let $FSL$ be the attenuation of the signal due to the trajectory it traverses from the radio station to the location of the devices. We use the following equation to approximate the free space loss of the AM signal:
+$$FSL[dB]=10\log_{10}((\frac{4\pi df}{c})^2),$$
+where $d$ is the distance between the transmitters and the receiver in meters, $f$ is the central frequency in hertz, and $c$ is the speed of light in meters per second. For the distance and frequency considered in our model, $FSL$ can be computed as follows:
+$$FSL=10\log_{10}((\frac{4\pi (\num{6.47e3} \text{ m})(\num{960e3} \text{ Hz})}{(\num{3e8} \text{ m/s})})^2)$$
+$$FSL[dB]=48.31 \text{ dB.}$$
+
+\begin{figure}[h!]
+  \centerline{\includegraphics[width=75mm,scale=0.50]{Figure_1.png}}
+  \caption{Multipoint-to-point ambient backscatter network with simultaneous transmissions.}
+\end{figure}
+
+Moreover, we assume $B_1$, $B_2$, and $R$ have the same high-gain ferrite bar antenna that allows them to receive and reflect the AM signal. We will assume the gain of this antenna, which we denote as $G_A$, is $2.15$ dB. This value is fairly arbitrary and is less than the maximum gain that can be provided by this type of antenna \cite{ferrite_antenna}. $P\{S_{R}(t)\}$ can be estimated as follows:
+$$P\{S_{R}(t)\}=P\{S_{AM}(t)\}-FSL+G_A$$
+$$P\{S_{R}(t)\}=67 \text{ dBm} - 48.31 \text{ dB} + 2.15 \text{ dBi}$$
+$$P\{S_{R}(t)\}\approx 21 \text{ dBm.}$$
+As a result of these computations, our model assumes that, at any time instant, $B_1$, $B_2$, and $R$ receive the same 21 dBm AM signal. The values $\alpha$, $0 \leq \alpha \leq 1$, and $\beta$,$0 \leq \beta \leq 1$, represent the attenuation factors of the signals reflected by $B_1$ and $B_2$ with respect to $S_{R}(t)$, respectively, as perceived by $R$.
+
+\section{CONCURRENT TRANSMISSIONS}
+
+Our simulated backscattering transmissions replicate the mechanisms described in  \cite{liu2013ambient}. A device $B_i$, $i \in \{1,2\}$, modulates a series of bits by toggling between reflective and non-reflective states. In real implementations, this switching is performed by modulating the impedance of the antenna such that its reflective properties vary according to the binary input. To transmit a "1" bit, the transmitter enters the backscattering state and reflects the ambient signal it receives. To transmit a "0" bit, it remains idle, i.e., it does not reflect the input signal. In our GNU Radio implementation, concurrent transmissions are modeled according to the following equation:
+$$S_{in}(n)= S_{R}(n) + b_{B_1}^\tau(\alpha S_{R}(n)) + b_{B_2}^\tau(\beta S_{R}(n)),$$
+where $S_{in}(n)$, $n \in \{1,2,...\}$, is the $n$th sample of the input signal at the receiver, $S_{R}(n)$ is the $n$th sample of the signal received by $R$ from the AM tower, $\alpha$ and $\beta$ are defined as before, $b_{B_1}^\tau \in \{0,1\}$ is the bit transmitted by $B_1$ during the $\tau\text{th}$ bit period, $\tau=\{1,2,3,...\}$, and $b_{B_2}^\tau \in \{0,1\}$ is the bit transmitted by $B_2 $ during the $\tau\text{th}$ bit period. Let $N$ be the number of samples in a bit period. We use a sampling rate of 4.096 MHz and assume that both transmitters communicate at 100 bits/sec. Consequently, each $\tau$ encompasses $N=40,960$ discrete time samples of the signals involved. This equation evinces the four possible states at the receiver:
+
+\begin{itemize}
+
+\item \textbf{Case 1: }During bit period $\tau$, $B_1$ transmits $b_{B_1}^\tau=0$ and $B_2$ transmits $b_{B_2}^\tau=0$. $S_{in}(n)$ is therefore equal to $S_{R}(n)$, i.e., the ambient signal received by $R$ from the AM transmitter.
+\item \textbf{Case 2: }During bit period $\tau$, $B_1$ transmits $b_{B_1}^\tau=1$ and $B_2$ transmits $b_{B_2}^\tau=0$. $S_{in}(n)$ is therefore equal to $S_{R}(n) + \alpha S_{R}(n)$, i.e., the ambient signal received by $R$ from the AM transmitter plus the signal $B_1$ backscatters.
+\item \textbf{Case 3: }During bit period $\tau$, $B_1$ transmits $b_{B_1}^\tau=0$ and $B_2$ transmits $b_{B_2}^\tau=1$. $S_{in}(n)$ is therefore equal to $S_{R}(n) + \beta S_{R}(n)$, i.e., the ambient signal received by $R$ from the AM transmitter plus the signal $B_2$ backscatters.
+\item \textbf{Case 4: }During bit period $\tau$, $B_1$ transmits $b_{B_1}^\tau=1$ and $B_2$ transmits $b_{B_2}^\tau=1$. $S_{in}(n)$ is therefore equal to $S_{R}(n)+ \alpha S_{R}(n) + \beta S_{R}(n)$. In other words, the signal $R$ must process equals the sum of the ambient signal received by $R$ from the AM transmitter, the signal backscattered by $B_1$, and the signal backscattered by $B_2$. 
+\end{itemize}
+
+The sampled signal $S_{in}(n)$ is processed by our decoding algorithms, and the objective is to retrieve bits $b_{B_1}^\tau$ and $b_{B_2}^\tau$, $\forall \tau$.
+
+
+\section{CONCURRENT DEMODULATION}
+
+We propose two procedures to decode simultaneous ambient backscatter transmissions: \textit{Demodulation via Power Superposition} and \textit{Demodulation via Time Offset}. Both demodulation procedures are an extension of the techniques used in \cite{liu2013ambient}. For the $\tau\text{th}$ bit period, the average  is computed as follows:
+$$\xi_{\tau}=\frac{1}{N}\sum_{n=1}^{N}|S_{in}(n + N(\tau-1))|^2.$$
+
+\begin{figure}[h!]
+  \centerline{\includegraphics[width=75mm,scale=0.50]{Figure_2.png}}
+  \caption{Power levels for several $\xi_{\tau}$.}
+\end{figure}
+Our decoding schemes analyze in one way or another the sequence of values $\xi_{\tau}$. We argue that, under very special conditions, both proposed mechanisms provide a reliable way to decode concurrent backscatter communications.
+
+\subsection{Demodulation via Power Superposition} The intuition behind this decoding algorithm is that, as long as the difference $|\alpha - \beta|$ is significantly greater than zero at all times during the communication process and it remains consistent, the values $\xi_{\tau}$ will fall predictably above or below 4 very distinctive power levels, one for each of the cases presented before. This effect is shown in Figure 2.
+
+The algorithm starts by initiating a learning process. A sequence of averages $\xi_{1}, \xi_{2}, \xi_{3},...$ is collected for a brief period of time. Assuming $\alpha<\beta$ at all time instances, this sequence is used to compute four thresholds, $T_1<T_2<T_3<T_4$, which are defined as follows:
+
+\begin{itemize}
+\item $T_1$: This is the threshold corresponding to the average power level of the input signal when $S_{in}(t)=S_{R}(t)$, i.e., when $B_1$ transmits a "0" bit and $B_2$ transmits a "0" bit.
+
+\item $T_2$: This is the threshold corresponding to the average power level of the input signal when $S_{in}(t)=S_{R}(t) + \alpha S_{R}(t)$, i.e., when $B_1$ transmits a "1" bit and $B_2$ transmits a "0" bit.
+
+\item $T_3$: This is the threshold corresponding to the average power level of the input signal when $S_{in}(t)=S_{R}(t) + \beta S_{R}(t)$, i.e., when $B_1$ transmits a "0" bit and $B_2$ transmits a "1" bit.
+
+\item $T_4$: This is the threshold corresponding to the average power level of the input signal when $S_{in}(t)=S_{R}(t) + \alpha S_{R}(t)+ \beta S_{R}(t)$, i.e., when $B_1$ transmits a "1" bit and $B_2$ transmits a "1" bit.
+\end{itemize}
+
+\begin{figure}[h!]
+  \centerline{\includegraphics[width=65mm,scale=0.50]{Figure_3.png}}
+  \caption{Thresholds used in the Demodulation via Power Superposition algorithm.}
+\end{figure}
+
+It is worth pointing out that we assume that the signals always meet constructively at the receiver. Next, the algorithm computes three additional sub-thresholds: $T_{1,2}=\frac{1}{2}(T_1 +T_2)$, $T_{2,3}=\frac{1}{2}(T_2 +T_3)$, $T_{3,4}=\frac{1}{2}(T_3 +T_4)$. Figure 3 shows all the thresholds and possible locations of averages $\xi_{\tau}$. Then, for the $\tau$th bit period, the following decoding process takes place:\\\\if $\xi_\tau \geq T_{3,4}:$\\
+\hphantom{1cm}return (1, 1)\\
+if $\xi_\tau \geq T_{2,3}$:\\
+\hphantom{1cm}return (0, 1)\\
+if $\xi_\tau \geq T_{1,2}$:\\
+\hphantom{1cm}return (1, 0)\\
+return (0, 0)\\\\For instance, $\xi_3$ in Figure 3 indicates that during that bit period, $B_1$ transmitted a "1" bit and $B_2$ transmitted a "0" bit.
+
+We clearly see that for every time period $\tau$, two bits of information are decoded by the receiver, one for each of the transmitters. Hence, this demodulation technique correctly demodulates two transmissions and doubles throughput. Determining the value of $|\alpha - \beta|$ above which demodulation is intractable is beyond the scope of this project. However, by defining this parameter, we can envision a system where more than two backscatterers communicate simultaneously with one receiver.
+
+On the downside, assuming that $|\alpha - \beta|$ will remain consistent during transmission may not be true in practical implementations. The reason is that transmitters can somehow control the power with which they emit a signal, but they can't control the power with which the signal arrives at the receiver. Consequently, if we incorporate exogenous phenomena such as fading and noise in our model, we might not be able to accurately decode bits through power superposition analysis.
+
+\subsection{Demodulation via Time Offset}
+
+\begin{itemize}
+
+\item Use either SI (MKS) or CGS as primary units. (SI units are encouraged.) English units may be used as secondary units (in parentheses). An exception would be the use of English units as identifiers in trade, such as Ò3.5-inch disk driveÓ.
+\item Avoid combining SI and CGS units, such as current in amperes and magnetic field in oersteds. This often leads to confusion because equations do not balance dimensionally. If you must use mixed units, clearly state the units for each quantity that you use in an equation.
+\end{itemize}
+
+
+
+\section{EVALUATION}
+
+Use this sample document as your LaTeX source file to create your document. Save this file as {\bf root.tex}. You have to make sure to use the cls file that came with this distribution. If you use a different style file, you cannot expect to get required margins. Note also that when you are creating your out PDF file, the source file is only part of the equation. {\it Your \TeX\ $\rightarrow$ PDF filter determines the output file size. Even if you make all the specifications to output a letter file in the source - if you filter is set to produce A4, you will only get A4 output. }
+
+It is impossible to account for all possible situation, one would encounter using \TeX. If you are using multiple \TeX\ files you must make sure that the ``MAIN`` source file is called root.tex - this is particularly important if your conference is using PaperPlaza's built in \TeX\ to PDF conversion tool.
+
+
+\section{CONCLUSIONS}
+
+A conclusion section is not required. Although a conclusion may review the main points of the paper, do not replicate the abstract as the conclusion. A conclusion might elaborate on the importance of the work or suggest applications and extensions. 
+
+
+
+\bibliography{biblio}{}
+\bibliographystyle{plain}
+
+
+
+
+\end{document}

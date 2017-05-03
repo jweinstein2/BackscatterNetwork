@@ -1,0 +1,5 @@
+PWD /Users/jaredweinstein/Desktop/CS434Project/paper
+INPUT /opt/local/etc/texmf/texmf.cnf
+INPUT /opt/local/var/db/texmf/web2c/pdftex/pdflatex.fmt
+INPUT Simultaneous Backscatter Communications.tex
+OUTPUT /Users/jaredweinstein/Desktop/CS434Project/paper/.latex/Simultaneous Backscatter Communications.log

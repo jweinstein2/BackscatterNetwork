@@ -1,0 +1,25 @@
+\begin{thebibliography}{1}
+
+\bibitem{ferrite_antenna}
+A high-gain ferrite bar antenna for the pl-360/pl-365 and countycomm gp5
+  series.
+\newblock
+  \url{http://swling.com/blog/2016/01/a-high-gain-ferrite-bar-antenna-for-the-pl-360pl-365-and-countycomm-gp5-series/}.
+
+\bibitem{weli_am}
+Radio locator: Weli-am 960 khz.
+\newblock \url{http://radio-locator.com/info/WELI-AM}.
+
+\bibitem{jang2016stent}
+Heedon Jang, Kyungmin Na, and Franklin Bien.
+\newblock A stent based in-vivo bio-sensing system for glucose monitoring.
+\newblock In {\em Radio-Frequency Integration Technology (RFIT), 2016 IEEE
+  International Symposium on}, pages 1--3. IEEE, 2016.
+
+\bibitem{liu2013ambient}
+Vincent Liu, Aaron Parks, Vamsi Talla, Shyamnath Gollakota, David Wetherall,
+  and Joshua~R Smith.
+\newblock Ambient backscatter: wireless communication out of thin air.
+\newblock {\em ACM SIGCOMM Computer Communication Review}, 43(4):39--50, 2013.
+
+\end{thebibliography}

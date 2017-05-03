@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{WinNT}
+{MS Windows NT} kernel description.
+\newblock
+  \url{http://web.archive.org/web/20080207010024/http://www.808multimedia.com/winnt/kernel.htm}.
+
+\bibitem{liu2013ambient}
+Vincent Liu, Aaron Parks, Vamsi Talla, Shyamnath Gollakota, David Wetherall,
+  and Joshua~R Smith.
+\newblock Ambient backscatter: wireless communication out of thin air.
+\newblock {\em ACM SIGCOMM Computer Communication Review}, 43(4):39--50, 2013.
+
+\end{thebibliography}
