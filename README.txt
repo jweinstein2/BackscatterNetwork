@@ -17,16 +17,17 @@ Supporting Material
         the path to the directory that you are working from
     
         1.11 am_generator.grc
-              This generates the AM signal. Can swap between the cosine wave (no noise) and the audio input by 
-              plugging and unplugging the source on the left hand side.
+              This generates the AM signal. Can swap between the cosine wave (no noise) and 
+              the audio input by plugging and unplugging the source on the left hand side.
         1.12 treshold.grc
-              This sends values to the files so that the python program can determine the averages needed to 
-              calculate the thresholds.
+              This sends values to the files so that the python program can determine the 
+              averages needed to calculate the thresholds.
         1.13 backscatter.grc
-              This performs the actual backscattering, sending a stream of random bits, each repeated with 
-              reference to the size of a bit period. These bits are used to multiply with the signal that 
-              is added to the carrier (AM signal) and then are added together to emulate the reflecting of 
-              the signal by the two transmitting devices.
+              This performs the actual backscattering, sending a stream of random bits, 
+              each repeated with reference to the size of a bit period. These bits are used 
+              to multiply with the signal that is added to the carrier (AM signal) and then 
+              are added together to emulate the reflecting of the signal by the two transmitting 
+              devices.
         
     1.2 Python
         1.21 power_superposition.py
