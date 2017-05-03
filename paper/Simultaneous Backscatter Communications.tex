@@ -171,8 +171,10 @@ To fully understand the BER of different power levels we fixed $\beta = .5$ and 
   \caption{Plotting BER for variable $\alpha$ values}
 \end{figure}
 
-Our implementation of \textit{Demodulation via Time Offset} does not double the throughput; however, it still lets two devices transmit simultaneously. 
- \textit{Demodulation via Time Offset} does offer unique advantages over the power based decoding. Primarily, the decoding still works even when $\alpha = \beta$. See Figure 7. Furthermore, this implementation is highly scalable. If backscatter device $B_1$ can transmit at $x$ bits per second, then using our demodulation technique, devices $B_1 \ldots B_n$ can all transmit simultaneously and at $x / n$ bits per second. 
+Our implementation of \textit{Demodulation via Time Offset} does not double the throughput. The reason for this is as follows. When transmitting via ambient backscatter, the ceiling of the bit rate is going to be determined by how few samples give a representative average of the bit being sent. In the time offset, we are halving the number of samples that we take the average over. This assumes that there is a smaller number of samples that give a representative average, which contradicts our assertion about the bit rate. Thus, in order to perform \textit{Demodulation via Time Offset}, we must cut in half the rate at which we transmit bits. 
+\newline
+\newline
+However, it still lets two devices transmit simultaneously and decode them, so we decided it was an option worth pursuing. \textit{Demodulation via Time Offset} offers unique advantages over the power based decoding. Primarily, the decoding still works even when $\alpha = \beta$. See Figure 7. Furthermore, this implementation is highly scalable. If backscatter device $B_1$ can transmit at $x$ bits per second, then using our demodulation technique, devices $B_1 \ldots B_n$ can all transmit simultaneously and at $x / n$ bits per second. 
 
 \section{CONCLUSIONS}
 

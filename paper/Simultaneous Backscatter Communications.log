@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  3 MAY 2017 16:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  3 MAY 2017 19:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -874,7 +874,7 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
 
 
 ]
-<Figure_1.png, id=55, 315.67938pt x 318.18875pt>
+<Figure_1.png, id=51, 315.67938pt x 318.18875pt>
 File: Figure_1.png Graphic file (type png)
  <use Figure_1.png>
 Package pdftex.def Info: Figure_1.png used on input line 69.
@@ -886,7 +886,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 [2 <./Figure_1.png>]
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 87.
- <Figure_2.png, id=69, 701.62125pt x 373.395pt>
+ <Figure_2.png, id=65, 701.62125pt x 373.395pt>
 File: Figure_2.png Graphic file (type png)
 
 <use Figure_2.png>
@@ -898,7 +898,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 107.
-<Figure_3.png, id=70, 248.93pt x 206.7725pt>
+<Figure_3.png, id=66, 248.93pt x 206.7725pt>
 File: Figure_3.png Graphic file (type png)
  <use Figure_3.png>
 Package pdftex.def Info: Figure_3.png used on input line 112.
@@ -926,30 +926,36 @@ s-mit-ted a "1" bit and $\OML/ztmcm/m/it/10 B[]$
  []
 
 [3 <./Figure_2.png> <./Figure_3.png>]
-<Figure_4.png, id=78, 412.54124pt x 357.335pt>
+<Figure_4.png, id=74, 412.54124pt x 357.335pt>
 File: Figure_4.png Graphic file (type png)
  <use Figure_4.png>
 Package pdftex.def Info: Figure_4.png used on input line 135.
 (pdftex.def)             Requested size: 206.27011pt x 178.66705pt.
- [4 <./Figure_4.png>] <Figure_5(simple).png, id=86, 1284.8pt x 600.2425pt>
+ [4 <./Figure_4.png>] <Figure_5(simple).png, id=82, 1284.8pt x 600.2425pt>
 File: Figure_5(simple).png Graphic file (type png)
 
 <use Figure_5(simple).png>
 Package pdftex.def Info: Figure_5(simple).png used on input line 149.
 (pdftex.def)             Requested size: 642.39844pt x 300.12051pt.
- <Figure_6.png, id=87, 1027.84pt x 560.0925pt>
+ <Figure_6.png, id=83, 1027.84pt x 560.0925pt>
 File: Figure_6.png Graphic file (type png)
 
 <use Figure_6.png>
 Package pdftex.def Info: Figure_6.png used on input line 163.
 (pdftex.def)             Requested size: 513.91875pt x 280.04556pt.
- <Figure_7.png, id=88, 809.0225pt x 476.78125pt>
+ <Figure_7.png, id=84, 809.0225pt x 476.78125pt>
 File: Figure_7.png Graphic file (type png)
 
 <use Figure_7.png>
 Package pdftex.def Info: Figure_7.png used on input line 170.
 (pdftex.def)             Requested size: 404.51027pt x 238.39003pt.
- (./Simultaneous Backscatter Communications.bbl
+
+Underfull \hbox (badness 10000) in paragraph at lines 174--178
+
+ []
+
+[5 <./Figure_5(simple).png> <./Figure_6.png> <./Figure_7.png>]
+(./Simultaneous Backscatter Communications.bbl
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 7.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/ot1pcr.fd
@@ -975,64 +981,54 @@ Overfull \hbox (278.83304pt too wide) in paragraph at lines 4--8
 0pl-[]365-[]and-[]countycomm-[]gp5-[]series/$[]\OT1/ptm/m/n/10 . 
  []
 
-[5 <./Figure_5(simple).png> <./Figure_6.png> <./Figure_7.png>]
+
 Underfull \hbox (badness 1163) in paragraph at lines 10--12
 []\OT1/ptm/m/n/10 Radio lo-ca-tor: Weli-am 960 khz.  []$\OT1/pcr/m/n/10 http : 
 / /
  []
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 189.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 191.
  [6
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 189.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 191.
  (./Simultaneous Backscatter Communications.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 189.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 189.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 191.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 191.
+Package rerunfilecheck Info: File `"Simultaneous Backscatter Communications".ou
+t' has not changed.
+(rerunfilecheck)             Checksum: 984515BB87997C6F32ED8B4FC869F43E;472.
 
-
-Package rerunfilecheck Warning: File `"Simultaneous Backscatter Communications"
-.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `"Simultaneous Backscatter Communica
-tions".out':
-(rerunfilecheck)             Before: 007689748C1379F3BDE8495F69C29977;533
-(rerunfilecheck)             After:  984515BB87997C6F32ED8B4FC869F43E;472.
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.55997pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 189.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 191.
  ) 
 Here is how much of TeX's memory you used:
- 18896 strings out of 493014
- 354989 string characters out of 6133351
+ 18894 strings out of 493014
+ 354959 string characters out of 6133351
  399754 words of memory out of 5000000
- 22214 multiletter control sequences out of 15000+600000
+ 22213 multiletter control sequences out of 15000+600000
  55439 words of font info for 132 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,10n,43p,10411b,820s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{subsection.6.1} has been referenced but does not 
-exist, replaced by a fixed one
-
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
-live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texl
-ive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texliv
-e/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
-/2016/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2016/te
-xmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2016/texmf-dist/fo
-nts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/u
-rw/times/utmb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/u
-tmbi8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/utmr8a.pfb
-></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on "Simultaneous Backscatter Communications.pdf" (6 pages, 78535
-2 bytes).
+ 36i,10n,43p,10411b,724s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texl
+ive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
+ve/2016/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2016/
+texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2016/texmf-dist/
+fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1
+/urw/times/utmb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times
+/utmbi8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/utmr8a.p
+fb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on "Simultaneous Backscatter Communications.pdf" (6 pages, 78595
+6 bytes).
 PDF statistics:
- 150 PDF objects out of 1000 (max. 8388607)
- 119 compressed objects within 2 object streams
- 27 named destinations out of 1000 (max. 500000)
- 108 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 146 PDF objects out of 1000 (max. 8388607)
+ 115 compressed objects within 2 object streams
+ 26 named destinations out of 1000 (max. 500000)
+ 100 words of extra memory for PDF output out of 10000 (max. 10000000)
 
