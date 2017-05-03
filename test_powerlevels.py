@@ -5,7 +5,7 @@ import os
 import re
 import csv
 
-from decode import calculateBER
+from power_superposition import calculateBER
 
 def replace(file, pattern, subst):
     # Read contents from file as a single string
@@ -25,11 +25,11 @@ def replace(file, pattern, subst):
 jvalues = []
 BERvalues = []
 
-readableBER = open('a_bits_readable.txt', 'w')
+readableBER = open('bpower-50(lessnoise).txt', 'w')
 # 	bitter.write(str(line)+'\n')
 
-for i in range(0,100):
-    j = i / 100.0
+for i in range(0,41):
+    j = i / 40.0
     jvalues.append(j)
 
     # Update the variables
@@ -37,7 +37,7 @@ for i in range(0,100):
 
 
     # Run threshold.py to generate accurate thesholds
-    os.system("gtimeout --signal=SIGINT 2 /opt/local/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python -u /Users/jaredweinstein/Desktop/CS434Project/threshold.py")
+    os.system("gtimeout --signal=SIGINT 3 /opt/local/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python -u /Users/jaredweinstein/Desktop/CS434Project/threshold.py")
 
     # Run received_signal.py
     os.system("gtimeout --signal=SIGINT 6 /opt/local/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python -u /Users/jaredweinstein/Desktop/CS434Project/received_signal.py")
