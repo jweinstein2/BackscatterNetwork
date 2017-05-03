@@ -46,3 +46,8 @@ Supporting Material
               the number of iterations (how many power levels between 0 and 1), change the value of the variable 
               'numiter'. To change whether it tests the Power Superposition Model or the Time Offset Model, 
               change the import that is commented at the top (noted in the file).
+              
+              Recommended: Go into window_size.py and power_superposition.py and comment out the print statements
+              that print the decoded values if you are testing over a large number of iterations.
+              
+              
