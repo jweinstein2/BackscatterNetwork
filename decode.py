@@ -14,8 +14,12 @@ def calculateBER():
 		if avg >= t3:
 			return (1, 1)
 		if avg >= t2:
+			if flip:
+				return (1, 0)
 			return (0, 1)
 		if avg >= t1:
+			if flip:
+				return (0, 1)
 			return (1, 0)
 		return (0, 0)
 
@@ -29,21 +33,30 @@ def calculateBER():
 	avg_both = scipy.fromfile(open('output/avg_both'), dtype=scipy.float32)[samples_per_bit:samples_per_bit + 100]
 
 	# The center of each of the 4 bands (uses only first 100 bits)
-	neither = sum(avg_neither) / len(avg_neither)
-	a = sum(avg_a) / len(avg_a)
-	b = sum(avg_b) / len(avg_b)
-	both = sum(avg_both) / len(avg_both)
+	try:
+		neither = sum(avg_neither) / len(avg_neither)
+		a = sum(avg_a) / len(avg_a)
+		b = sum(avg_b) / len(avg_b)
+		both = sum(avg_both) / len(avg_both)
+	except ZeroDivisionError:
+		print "ERROR: divide by 0"
+		return 0
+
+	if (a > b):
+		print "FLIP"
+		flip = True
+	else:
+		flip = False
+
+	if flip:
+		temp = a
+		a = b
+		b = temp
 
 	# Get the three thresholds based on averages of the four bands
 	t1 = (neither + a) / 2
 	t2 = (a + b) / 2
 	t3 = (b + both) / 2
-
-	# Make sure that our bands are in correct order.
-	lst = [neither, t1, a, t2, b, t3, both]
-	if (sorted(lst) != lst):
-		print 'ERROR: assumption [neither < a < b < both] violated'
-		quit()
 
 	# print ('========== DECODED DATA ===========')
 	# print ('     - ' + str(neither))
@@ -54,6 +67,12 @@ def calculateBER():
 	# print ('  t3 - ' + str(t3))
 	# print ('     - ' + str(both))
 	# print ('===================================')
+
+	# Make sure that our bands are in correct order.
+	lst = [neither, t1, a, t2, b, t3, both]
+	if (sorted(lst) != lst):
+		print 'ERROR: assumption [neither < a < b < both] violated'
+		return 0
 
 
 	f = scipy.fromfile(open('output/ab_backscatter'), dtype=scipy.float32)
@@ -124,10 +143,13 @@ def calculateBER():
 			BER = BER + 1
 	BER = 100 - ((BER * 100.0) / (len(abitlist) * 2))
 
-	print('============= SUMMARY =============')
-	print('             BER - ' + str(BER)[:5] + '%')
-	print('          length - ' + str( len(abitlist) ) + ' bits')
-	print(' samples per bit - ' + str(samples_per_bit))
-	print('===================================')
+	# print('============= SUMMARY =============')
+	# print('             BER - ' + str(BER)[:5] + '%')
+	# print('          length - ' + str( len(abitlist) ) + ' bits')
+	# print(' samples per bit - ' + str(samples_per_bit))
+	# print('===================================')
 
 	return BER
+
+if __name__ == "__main__":
+	calculateBER()
