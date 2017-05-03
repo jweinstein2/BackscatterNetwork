@@ -13,6 +13,9 @@ Supporting Material
   
 1. Code
     1.1 GNU Radio
+        ***NOTE: For all GNU Radio files, any time there is a file sink or a file source, update 
+        the path to the directory that you are working from
+    
         1.11 am_generator.grc
               This generates the AM signal. Can swap between the cosine wave (no noise) and the audio input by 
               plugging and unplugging the source on the left hand side.
