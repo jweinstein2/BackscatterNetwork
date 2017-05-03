@@ -31,8 +31,10 @@ Supporting Material
         
     1.2 Python
         1.21 power_superposition.py
-              This file implements the decoding algorithm discussed in the Power Superposition Model. It 
-              calculates the averages of each threshold band based on the values from threshold.grc. It 
+              This file implements the decoding algorithm discussed in the Power Superposition 
+              Model. It calculates the averages of each threshold band based on the values from 
+              threshold.grc. It 
+              
               then loops over the values of backscatter.grc, creating an average of every window. It compares 
               this average to the thresholds and determines the bits that each device is sending in that bit window.
         1.22 window_size.py
