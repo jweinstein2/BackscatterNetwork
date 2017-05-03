@@ -3,6 +3,7 @@ import time
 import sys
 import os
 import re
+import csv
 
 from decode import calculateBER
 
