@@ -54,6 +54,7 @@ Supporting Material
               top (noted in the file).
               
               Recommended: Go into window_size.py and power_superposition.py and comment out the print 
-              statements that print the decoded values if you are testing over a large number of iterations.
+              statements that print the decoded values if you are testing over a large number of 
+              iterations.
               
               
