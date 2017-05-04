@@ -40,21 +40,22 @@ Supporting Material
               This file implements the decoding algorithm discussed in the Time Offset Model. It 
               also calculates the averages of each threshold band, but it ignores the middle bands 
               because it only cares about thresholds 1 and 3 (see paper). It then takes the values 
-              sent from device A and the values sent from device B, offsets, and adds them. It then 
-              decodes the averages across half of a bit period and determines the value of the bit 
-              based on the threshold, and determines the device sent based on which window it is in. 
+              sent from device A and the values sent from device B, offsets, and adds them. It 
+              then decodes the averages across half of a bit period and determines the value of 
+              the bit based on the threshold, and determines the device sent based on which window 
+              it is in. 
         1.23 test_powerlevel.py
-              This file is used to evaluate the performances of each model across a spectrum of power 
-              levels. It modifies a file called config that contains the power levels used by the GRC 
-              files and reruns the GRC files and either power_superposition.py or window_size.py. It 
-              takes the bit error rate for each power level and stores them in an excel file, which we 
-              use to generate graphs. To change the number of iterations (how many power levels between 
-              0 and 1), change the value of the variable 'numiter'. To change whether it tests the Power 
-              Superposition Model or the Time Offset Model, change the import that is commented at the 
-              top (noted in the file).
+              This file is used to evaluate the performances of each model across a spectrum of 
+              power levels. It modifies a file called config that contains the power levels used
+              by the GRC files and reruns the GRC files and either power_superposition.py or 
+              window_size.py. It takes the bit error rate for each power level and stores them in 
+              an excel file, which we use to generate graphs. To change the number of iterations 
+              (how many power levels between 0 and 1), change the value of the variable 'numiter'. 
+              To change whether it tests the Power Superposition Model or the Time Offset Model, 
+              change the import that is commented at the top (noted in the file).
               
-              Recommended: Go into window_size.py and power_superposition.py and comment out the print 
-              statements that print the decoded values if you are testing over a large number of 
-              iterations.
+              Recommended: Go into window_size.py and power_superposition.py and comment out 
+              the print statements that print the decoded values if you are testing over a 
+              large number of iterations.
               
               
